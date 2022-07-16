@@ -1,0 +1,7 @@
+node_modules
+dist
+coverage
+.vscode
+/frontend/public
+/backend/migrations
+/backend/seeders
