@@ -1,0 +1,8 @@
+*.html linguist-vendored
+*.htm linguist-vendored
+*.css linguist-vendored
+*.scss linguist-vendored
+node_modules/* linguist-vendored
+frontend/node_modules/* linguist-vendored
+frontend/public/vendor/* linguist-vendored
+backend/node_modules/* linguist-vendored
