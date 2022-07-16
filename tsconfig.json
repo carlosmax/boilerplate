@@ -5,6 +5,6 @@
     "rootDirs": ["frontend", "backend"],
     "jsx": "react"
   },
-  "include": ["frontend", "backend"],
+  "include": ["frontend", "backend", "jest.config.ts"],
   "exclude": ["node_modules"]
 }
