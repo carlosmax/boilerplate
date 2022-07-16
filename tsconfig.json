@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es2019",
+    "rootDirs": ["frontend", "backend"],
+    "jsx": "react"
+  },
+  "include": ["frontend", "backend"],
+  "exclude": ["node_modules"]
+}
