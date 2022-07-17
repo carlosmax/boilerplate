@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   roots: ['<rootDir>/packages/backend/src', '<rootDir>/packages/frontend/src'],
   collectCoverage: true,
   collectCoverageFrom: [
@@ -10,5 +10,9 @@ export default {
   testEnvironment: 'node',
   transform: {
     '.+\\.ts$': 'ts-jest',
+  },
+  moduleFileExtensions: ['ts', 'js'],
+  moduleNameMapper: {
+    '@/(.*)': '<rootDir>/packages/**/src/$1',
   },
 }
