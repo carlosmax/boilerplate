@@ -2,6 +2,6 @@ node_modules
 dist
 coverage
 .vscode
-/frontend/public
-/backend/migrations
-/backend/seeders
+/packages/frontend/public
+/packages/backend/migrations
+/packages/backend/seeders

@@ -2,9 +2,9 @@
   "compilerOptions": {
     "module": "commonjs",
     "target": "es2019",
-    "rootDirs": ["frontend", "backend"],
+    "rootDirs": ["packages/frontend", "packages/backend"],
     "jsx": "react"
   },
-  "include": ["frontend", "backend", "jest.config.ts"],
+  "include": ["packages/frontend", "packages/backend", "jest.config.ts"],
   "exclude": ["node_modules"]
 }

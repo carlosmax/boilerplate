@@ -1,14 +1,14 @@
 export default {
-  roots: ['<rootDir>/backend/src', '<rootDir>/frontend/src'],
+  roots: ['<rootDir>/packages/backend/src', '<rootDir>/packages/frontend/src'],
   collectCoverage: true,
-  collectCoverageFrom: ['<rootDir>/backend/src/**/*.ts', '<rootDir>/frontend/src/**/*.{ts,tsx}'],
+  collectCoverageFrom: [
+    '<rootDir>/packages/backend/src/**/*.ts',
+    '<rootDir>/packages/frontend/src/**/*.{ts,tsx}',
+  ],
   coverageDirectory: 'coverage',
   coverageProvider: 'v8',
   testEnvironment: 'node',
   transform: {
     '.+\\.ts$': 'ts-jest',
-  },
-  moduleNameMapper: {
-    '~/(.*)': '<rootDir>/src/$1',
   },
 }
