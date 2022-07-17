@@ -1,18 +1,7 @@
 module.exports = {
-  roots: ['<rootDir>/packages/backend/src', '<rootDir>/packages/frontend/src'],
-  collectCoverage: true,
-  collectCoverageFrom: [
-    '<rootDir>/packages/backend/src/**/*.ts',
-    '<rootDir>/packages/frontend/src/**/*.{ts,tsx}',
+  verbose: true,
+  projects: [
+    '<rootDir>/packages/frontend/jest.config.js',
+    '<rootDir>/packages/backend/jest.config.js',
   ],
-  coverageDirectory: 'coverage',
-  coverageProvider: 'v8',
-  testEnvironment: 'node',
-  transform: {
-    '.+\\.ts$': 'ts-jest',
-  },
-  moduleFileExtensions: ['ts', 'js'],
-  moduleNameMapper: {
-    '@/(.*)': '<rootDir>/packages/**/src/$1',
-  },
 }
