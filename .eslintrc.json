@@ -35,6 +35,11 @@
     ]
     // "brace-style": ["error", "stroustrup"]
   },
+  "settings": {
+    "react": {
+      "version": "18"
+    }
+  },
   "overrides": [
     {
       "files": ["**/*.tsx", "**/*.jsx", "**/*.js", "**/*.ts"],
