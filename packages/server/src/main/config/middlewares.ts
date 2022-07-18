@@ -15,7 +15,7 @@ export default (app: Express): void => {
   const stream = {
     write: (text: string) => {
       LOGGER.info(text)
-    },
+    }
   }
 
   app.use(morgan('dev', { stream }))

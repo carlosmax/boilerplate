@@ -1,4 +1,8 @@
+const { name } = require('./package.json')
+
 module.exports = {
+  name,
+  displayName: name,
   roots: ['<rootDir>/src'],
   collectCoverage: true,
   collectCoverageFrom: ['<rootDir>/src/**/*.ts'],

@@ -1,7 +1,7 @@
 module.exports = {
   verbose: true,
-  projects: [
-    '<rootDir>/packages/frontend/jest.config.js',
-    '<rootDir>/packages/backend/jest.config.js',
-  ],
+  preset: 'ts-jest',
+  projects: ['<rootDir>/packages/*/jest.config.js'],
+  coverageDirectory: '<rootDir>/coverage/',
+  collectCoverageFrom: ['<rootDir>/packages/*/src/**/*.{ts,tsx}']
 }

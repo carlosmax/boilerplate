@@ -24,12 +24,12 @@ const logger = winston.createLogger({
       format: format.combine(
         format.colorize(),
         format.timestamp({
-          format: 'YYYY-MM-DD HH:mm:ss',
+          format: 'YYYY-MM-DD HH:mm:ss'
         }),
         customFormat
-      ),
-    }),
-  ],
+      )
+    })
+  ]
 })
 
 export const Logger = (namespace?: string): winston.Logger => {

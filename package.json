@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Base Project",
   "author": "Carlos Max",
+  "private": true,
   "scripts": {
     "lint:check": "eslint .",
     "lint:fix": "eslint . --fix",
@@ -15,30 +16,22 @@
     "test:coveralls": "npm run test:ci && coveralls < coverage/lcov.info"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^4.31.1",
-    "eslint": "^7.32.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-config-standard-with-typescript": "^21.0.1",
-    "eslint-plugin-import": "^2.24.2",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-promise": "^5.1.0",
-    "eslint-plugin-react": "^7.29.4",
-    "eslint-plugin-react-hooks": "^4.4.0",
-    "eslint-plugin-standard": "^5.0.0",
+    "@monorepo/eslint-config": "*",
     "@types/jest": "^27.5.2",
     "coveralls": "^3.1.1",
     "git-commit-msg-linter": "^4.1.1",
     "husky": "^7.0.4",
-    "lint-staged": "^12.3.8",
     "jest": "^27.5.1",
+    "lint-staged": "^12.3.8",
     "ts-jest": "^27.1.4",
     "ts-node": "^10.7.0",
-    "typescript": "4.4.4"
+    "typescript": "^4.7.4"
   },
   "workspaces": {
     "packages": [
       "packages/*"
     ]
-  }
+  },
+  "main": "index.js",
+  "license": "MIT"
 }

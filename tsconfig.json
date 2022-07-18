@@ -1,10 +1,11 @@
 {
   "compilerOptions": {
+    "target": "es6",
     "module": "commonjs",
-    "target": "es2019",
-    "rootDirs": ["packages/frontend", "packages/backend"],
-    "jsx": "react"
-  },
-  "include": ["packages/frontend", "packages/backend", "jest.config.js"],
-  "exclude": ["node_modules"]
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  }
 }
