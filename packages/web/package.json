@@ -3,10 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "@types/react": "^17.0.44",
-    "axios": "^0.26.1",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
+    "axios": "^0.27.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-router-dom": "^6.3.0",
     "typescript": "^4.7.4"
   },
@@ -19,6 +18,7 @@
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.7",
     "@types/axios": "^0.14.0",
     "@types/node": "^18.0.5",
+    "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.0",
     "babel-loader": "^8.2.5",
     "html-webpack-plugin": "^5.5.0",
