@@ -4,3 +4,4 @@ coverage
 .vscode
 .eslintrc.js
 packages/**/*.js
+packages/web/public
