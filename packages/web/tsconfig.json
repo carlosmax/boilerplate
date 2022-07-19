@@ -1,11 +1,11 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "lib": ["esnext", "dom"],
+    "lib": ["esnext", "dom", "dom.iterable"],
     "allowJs": false,
     "checkJs": false,
     "jsx": "react",
-    "rootDirs": ["src", "tests"],
+    "rootDirs": ["src"],
     "baseUrl": "src",
     "paths": {
       "@/*": ["*"]
