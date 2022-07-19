@@ -5,3 +5,4 @@ coverage
 .eslintrc.js
 packages/**/*.js
 packages/web/public
+packages/web/**/*.scss
