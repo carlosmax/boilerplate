@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 
 import Styles from './login-styles.scss'
+import LoginAside from './login-aside'
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('demo@example.com')
@@ -12,18 +13,7 @@ const Login: React.FC = () => {
 
   return (
     <div className={`${Styles.authincation} d-flex flex-column flex-lg-row flex-column-fluid`}>
-      <div className={`${Styles.login_aside} text-center  d-flex flex-column flex-row-auto`}>
-        <div className='d-flex flex-column-auto flex-column pt-lg-40 pt-15'>
-          <div className='text-center mb-4 pt-5'>{/* <img src={logo} alt='' /> */}</div>
-          <h3 className='mb-2'>Welcome back!</h3>
-          <p>
-            User Experience & Interface Design <br />
-            Strategy SaaS Solutions
-          </p>
-        </div>
-        {/* <div className='aside-image' 
-        style={{ backgroundImage: 'url(' + loginbg + ')' }}></div> */}
-      </div>
+      <LoginAside></LoginAside>
       <div
         className={`container ${Styles.flex_row_fluid} 
         d-flex flex-column justify-content-center position-relative overflow-hidden p-7 mx-auto`}
