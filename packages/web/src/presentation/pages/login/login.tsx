@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import Styles from './login-styles.scss'
 import LoginAside from './login-aside'
-import { Input } from '@/presentation/components'
+import { CustomCheckbox, Input } from '@/presentation/components'
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('demo@example.com')
@@ -37,7 +37,7 @@ const Login: React.FC = () => {
                   <form onSubmit={onLogin} className='form-validate'>
                     <h3 className='text-center mb-4 text-black'>Sign in your account</h3>
                     <Input
-                      id='val-email'
+                      id='email'
                       label='Email'
                       type='email'
                       value={email}
@@ -54,18 +54,7 @@ const Login: React.FC = () => {
                       errorMessage={errors.password}
                     ></Input>
                     <div className='form-row d-flex justify-content-between mt-4 mb-2'>
-                      <div className='form-group mb-3'>
-                        <div className='custom-control custom-checkbox ml-1'>
-                          <input
-                            type='checkbox'
-                            className='form-check-input'
-                            id='basic_checkbox_1'
-                          />
-                          <label className='form-check-label' htmlFor='basic_checkbox_1'>
-                            Remember my preference
-                          </label>
-                        </div>
-                      </div>
+                      <CustomCheckbox id='remember' label='Remember my preference'></CustomCheckbox>
                     </div>
                     <div className='text-center form-group mb-3'>
                       <button type='submit' className='btn btn-primary btn-block'>
