@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 
 import Styles from './login-styles.scss'
 import LoginAside from './login-aside'
+import { Input } from '@/presentation/components'
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('demo@example.com')
@@ -35,36 +36,23 @@ const Login: React.FC = () => {
                   )} */}
                   <form onSubmit={onLogin} className='form-validate'>
                     <h3 className='text-center mb-4 text-black'>Sign in your account</h3>
-                    <div className='form-group mb-3'>
-                      <label className='mb-1' htmlFor='val-email'>
-                        <strong>Email</strong>
-                      </label>
-                      <div>
-                        <input
-                          type='email'
-                          className='form-control'
-                          value={email}
-                          onChange={e => setEmail(e.target.value)}
-                          placeholder='Type Your Email Address'
-                        />
-                      </div>
-                      {errors.email && <div className='text-danger fs-12'>{errors.email}</div>}
-                    </div>
-                    <div className='form-group mb-3'>
-                      <label className='mb-1'>
-                        <strong>Password</strong>
-                      </label>
-                      <input
-                        type='password'
-                        className='form-control'
-                        value={password}
-                        placeholder='Type Your Password'
-                        onChange={e => setPassword(e.target.value)}
-                      />
-                      {errors.password && (
-                        <div className='text-danger fs-12'>{errors.password}</div>
-                      )}
-                    </div>
+                    <Input
+                      id='val-email'
+                      label='Email'
+                      type='email'
+                      value={email}
+                      placeholder='Type Your Email Address'
+                      onChange={e => setEmail(e.target.value)}
+                      errorMessage={errors.email}
+                    ></Input>
+                    <Input
+                      label='Password'
+                      type='password'
+                      value={password}
+                      placeholder='Type Your Password'
+                      onChange={e => setPassword(e.target.value)}
+                      errorMessage={errors.password}
+                    ></Input>
                     <div className='form-row d-flex justify-content-between mt-4 mb-2'>
                       <div className='form-group mb-3'>
                         <div className='custom-control custom-checkbox ml-1'>
