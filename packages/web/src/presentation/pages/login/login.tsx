@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { CustomCheckbox, ErrorMessage, Input } from '@/presentation/components'
+import { CustomCheckbox, FormStatus, Input } from '@/presentation/components'
 import LoginAside from './login-aside'
 
 import Styles from './login-styles.scss'
@@ -24,7 +24,7 @@ const Login: React.FC = () => {
             <div className='row no-gutters'>
               <div className='col-xl-12 tab-content'>
                 <div id='sign-in' className={`${Styles.auth_form} form-validation`}>
-                  <ErrorMessage error={messages.error} success={messages.success}></ErrorMessage>
+                  <FormStatus error={messages.error} success={messages.success}></FormStatus>
                   <form onSubmit={onLogin} className='form-validate'>
                     <h3 className='text-center mb-4 text-black'>Sign in your account</h3>
                     <Input

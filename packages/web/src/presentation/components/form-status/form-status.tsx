@@ -5,7 +5,7 @@ type Props = {
   success?: string
 }
 
-const ErrorMessage: React.FC<Props> = (props: Props) => {
+const FormStatus: React.FC<Props> = (props: Props) => {
   return (
     <>
       {props.error && (
@@ -18,4 +18,4 @@ const ErrorMessage: React.FC<Props> = (props: Props) => {
   )
 }
 
-export default ErrorMessage
+export default FormStatus
