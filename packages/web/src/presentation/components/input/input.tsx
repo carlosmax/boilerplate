@@ -29,7 +29,10 @@ const Input: React.FC<Props> = (props: Props) => {
         placeholder={props.placeholder}
         onChange={props.onChange}
       />
-      {props.errorMessage && <div className='text-danger fs-12'>{props.errorMessage}</div>}
+
+      <div data-testid={props.id ? `${props.id}-error` : ''} className='text-danger fs-12'>
+        {props.errorMessage}
+      </div>
     </div>
   )
 }

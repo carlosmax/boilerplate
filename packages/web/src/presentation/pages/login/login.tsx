@@ -6,14 +6,17 @@ import LoginAside from './login-aside'
 type StateProps = {
   errorMessage?: string
   successMessage?: string
+  email?: string
+  password?: string
+  emailError?: string
+  passwordError?: string
 }
 
 const Login: React.FC = () => {
-  const [state] = useState<StateProps>({})
-  const [email, setEmail] = useState('demo@example.com')
-  const inputMessages = { email: '', password: '' }
-  const [messages] = useState<any>(inputMessages)
-  const [password, setPassword] = useState('123456')
+  const [state] = useState<StateProps>({
+    email: 'demo@example.com',
+    password: '123456'
+  })
 
   const onLogin = (e): void => {}
 
@@ -30,28 +33,25 @@ const Login: React.FC = () => {
               <div className='col-xl-12 tab-content'>
                 <div id='sign-in' className={`auth-form form-validation`}>
                   <FormContext.Provider value={state}>
-                    <FormStatus
-                      error={state.errorMessage}
-                      success={state.successMessage}
-                    ></FormStatus>
                     <form onSubmit={onLogin} className='form-validate'>
                       <h3 className='text-center mb-4 text-black'>Sign in your account</h3>
                       <Input
                         id='email'
                         label='Email'
                         type='email'
-                        value={email}
+                        value={state.email}
                         placeholder='Type Your Email Address'
-                        onChange={e => setEmail(e.target.value)}
-                        errorMessage={messages.email}
+                        // onChange={e => setState(e.target.value)}
+                        errorMessage={state.emailError}
                       ></Input>
                       <Input
+                        id='password'
                         label='Password'
                         type='password'
-                        value={password}
+                        value={state.password}
                         placeholder='Type Your Password'
-                        onChange={e => setPassword(e.target.value)}
-                        errorMessage={messages.password}
+                        // onChange={e => setPassword(e.target.value)}
+                        errorMessage={state.passwordError}
                       ></Input>
                       <div className='form-row d-flex justify-content-between mt-4 mb-2'>
                         <CustomCheckbox
@@ -70,6 +70,10 @@ const Login: React.FC = () => {
                         {"Don't have an account?"} <a className='text-primary'>Sign up</a>
                       </p>
                     </div>
+                    <FormStatus
+                      error={state.errorMessage}
+                      success={state.successMessage}
+                    ></FormStatus>
                   </FormContext.Provider>
                 </div>
               </div>
