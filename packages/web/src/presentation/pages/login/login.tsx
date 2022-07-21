@@ -2,8 +2,6 @@ import React, { useState } from 'react'
 import { CustomCheckbox, FormStatus, Input } from '@/presentation/components'
 import LoginAside from './login-aside'
 
-import Styles from './login-styles.scss'
-
 const Login: React.FC = () => {
   const [email, setEmail] = useState('demo@example.com')
   const inputMessages = { email: '', password: '' }
@@ -13,17 +11,17 @@ const Login: React.FC = () => {
   const onLogin = (e): void => {}
 
   return (
-    <div className={`${Styles.authentication} d-flex flex-column flex-lg-row flex-column-fluid`}>
+    <div className={`authentication d-flex flex-column flex-lg-row flex-column-fluid`}>
       <LoginAside></LoginAside>
       <div
-        className={`container ${Styles.flex_row_fluid} 
-        d-flex flex-column justify-content-center position-relative overflow-hidden p-7 mx-auto`}
+        // eslint-disable-next-line max-len
+        className={`container flex-row-fluid d-flex flex-column justify-content-center position-relative overflow-hidden p-7 mx-auto`}
       >
         <div className='d-flex justify-content-center h-100 align-items-center'>
-          <div className={`${Styles.authentication_content} ${Styles.style_2}`}>
+          <div className={`authentication-content style-2`}>
             <div className='row no-gutters'>
               <div className='col-xl-12 tab-content'>
-                <div id='sign-in' className={`${Styles.auth_form} form-validation`}>
+                <div id='sign-in' className={`auth-form form-validation`}>
                   <FormStatus error={messages.error} success={messages.success}></FormStatus>
                   <form onSubmit={onLogin} className='form-validate'>
                     <h3 className='text-center mb-4 text-black'>Sign in your account</h3>

@@ -2,11 +2,10 @@ import React, { memo } from 'react'
 import { Logo } from '@/presentation/components'
 
 import Background from './background'
-import Styles from './login-styles.scss'
 
 const LoginAside: React.FC = () => {
   return (
-    <div className={`${Styles.login_aside} text-center  d-flex flex-column flex-row-auto`}>
+    <div className={`login-aside text-center  d-flex flex-column flex-row-auto`}>
       <div className='d-flex flex-column-auto flex-column pt-lg-40 pt-15'>
         <div className='text-center mb-4 pt-5'>
           <Logo />
