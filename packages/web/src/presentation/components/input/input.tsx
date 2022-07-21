@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import FormContext from '@/presentation/contexts/form/form-context'
 
 type Props = {
   id?: string
@@ -12,6 +13,14 @@ type Props = {
 }
 
 const Input: React.FC<Props> = (props: Props) => {
+  const { state, setState } = useContext(FormContext)
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    setState({
+      ...state,
+      [event.target.id]: event.target.value
+    })
+  }
+
   return (
     <div className='form-group mb-3'>
       {props.label ? (
@@ -22,12 +31,13 @@ const Input: React.FC<Props> = (props: Props) => {
         <></>
       )}
       <input
+        data-testid={props.id}
         id={props.id}
         type={props.type}
         className={props.className ?? 'form-control'}
         value={props.value}
         placeholder={props.placeholder}
-        onChange={props.onChange}
+        onChange={handleChange}
       />
 
       <div data-testid={props.id ? `${props.id}-error` : ''} className='text-danger fs-12'>

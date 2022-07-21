@@ -1,22 +1,22 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { CustomCheckbox, FormStatus, Input } from '@/presentation/components'
 import FormContext from '@/presentation/contexts/form/form-context'
+import { Validation } from '@/presentation/protocols'
 import LoginAside from './login-aside'
 
-type StateProps = {
-  errorMessage?: string
-  successMessage?: string
-  email?: string
-  password?: string
-  emailError?: string
-  passwordError?: string
+type Props = {
+  validation: Validation
 }
 
-const Login: React.FC = () => {
-  const [state] = useState<StateProps>({
-    email: 'demo@example.com',
-    password: '123456'
+const Login: React.FC<Props> = ({ validation }) => {
+  const [state, setState] = useState<any>({
+    email: '',
+    password: ''
   })
+
+  useEffect(() => {
+    validation.validate({ email: state.email })
+  }, [state.email])
 
   const onLogin = (e): void => {}
 
@@ -32,7 +32,7 @@ const Login: React.FC = () => {
             <div className='row no-gutters'>
               <div className='col-xl-12 tab-content'>
                 <div id='sign-in' className={`auth-form form-validation`}>
-                  <FormContext.Provider value={state}>
+                  <FormContext.Provider value={{ state, setState }}>
                     <form onSubmit={onLogin} className='form-validate'>
                       <h3 className='text-center mb-4 text-black'>Sign in your account</h3>
                       <Input
