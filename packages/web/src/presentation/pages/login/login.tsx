@@ -18,6 +18,10 @@ const Login: React.FC<Props> = ({ validation }) => {
     validation.validate({ email: state.email })
   }, [state.email])
 
+  useEffect(() => {
+    validation.validate({ password: state.password })
+  }, [state.password])
+
   const onLogin = (e): void => {}
 
   return (
