@@ -38,9 +38,16 @@ const Login: React.FC<Props> = ({ validation, authentication }) => {
     return !state.email || state.emailError || !state.password || state.passwordError
   }
 
+  const isFormValid = (): boolean => {
+    return state.email && state.password
+  }
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault()
-    await authentication.auth({ email: state.email, password: state.password })
+
+    if (isFormValid()) {
+      await authentication.auth({ email: state.email, password: state.password })
+    }
   }
 
   return (
@@ -56,7 +63,7 @@ const Login: React.FC<Props> = ({ validation, authentication }) => {
               <div className='col-xl-12 tab-content'>
                 <div id='sign-in' className={`auth-form form-validation`}>
                   <FormContext.Provider value={{ state, setState }}>
-                    <form onSubmit={handleSubmit} className='form-validate'>
+                    <form data-testid='form' onSubmit={handleSubmit} className='form-validate'>
                       <h3 className='text-center mb-4 text-black'>Sign in your account</h3>
                       <Input
                         id='email'
