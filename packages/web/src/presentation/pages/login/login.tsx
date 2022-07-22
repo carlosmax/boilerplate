@@ -11,11 +11,18 @@ type Props = {
 const Login: React.FC<Props> = ({ validation }) => {
   const [state, setState] = useState<any>({
     email: '',
-    password: ''
+    password: '',
+    emailError: '',
+    passwordError: '',
+    errorMessage: '',
+    successMessage: ''
   })
 
   useEffect(() => {
-    validation.validate('email', state.email)
+    setState({
+      ...state,
+      emailError: validation.validate('email', state.email)
+    })
   }, [state.email])
 
   useEffect(() => {
@@ -45,7 +52,6 @@ const Login: React.FC<Props> = ({ validation }) => {
                         type='email'
                         value={state.email}
                         placeholder='Type Your Email Address'
-                        // onChange={e => setState(e.target.value)}
                         errorMessage={state.emailError}
                       ></Input>
                       <Input
@@ -54,7 +60,6 @@ const Login: React.FC<Props> = ({ validation }) => {
                         type='password'
                         value={state.password}
                         placeholder='Type Your Password'
-                        // onChange={e => setPassword(e.target.value)}
                         errorMessage={state.passwordError}
                       ></Input>
                       <div className='form-row d-flex justify-content-between mt-4 mb-2'>
