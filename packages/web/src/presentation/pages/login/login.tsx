@@ -32,6 +32,10 @@ const Login: React.FC<Props> = ({ validation }) => {
     })
   }, [state.password])
 
+  const disableSubmit = (): boolean => {
+    return !state.email || state.emailError || !state.password || state.passwordError
+  }
+
   const onLogin = (e): void => {}
 
   return (
@@ -76,7 +80,7 @@ const Login: React.FC<Props> = ({ validation }) => {
                           data-testid='submit'
                           type='submit'
                           className='btn btn-primary btn-block'
-                          disabled
+                          disabled={disableSubmit()}
                         >
                           Sign In
                         </button>
