@@ -30,6 +30,8 @@ describe('Login Component', () => {
     expect(emailError.textContent).toBe('')
     const passwordError = sut.getByTestId('password-error')
     expect(passwordError.textContent).toBe('')
+    const submitButton = sut.getByTestId('submit') as HTMLButtonElement
+    expect(submitButton.disabled).toBe(true)
   })
 
   test('Should call Validation with correct email', () => {
