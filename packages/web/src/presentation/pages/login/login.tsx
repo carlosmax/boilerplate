@@ -72,7 +72,12 @@ const Login: React.FC<Props> = ({ validation }) => {
                         ></CustomCheckbox>
                       </div>
                       <div className='text-center form-group mb-3'>
-                        <button type='submit' className='btn btn-primary btn-block'>
+                        <button
+                          data-testid='submit'
+                          type='submit'
+                          className='btn btn-primary btn-block'
+                          disabled
+                        >
                           Sign In
                         </button>
                       </div>
