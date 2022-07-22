@@ -10,8 +10,13 @@ type SutTypes = {
   validationSpy: ValidationSpy
 }
 
-const makeSut = (): SutTypes => {
+type SutParams = {
+  errorMessage: string
+}
+
+const makeSut = (params?: SutParams): SutTypes => {
   const validationSpy = new ValidationSpy()
+  validationSpy.errorMessage = params?.errorMessage
   const sut = render(<Login validation={validationSpy} />)
   return {
     sut,
@@ -53,9 +58,8 @@ describe('Login Component', () => {
   })
 
   test('Should show email error if Validation fails', () => {
-    const { sut, validationSpy } = makeSut()
     const errorMessage = faker.random.words()
-    validationSpy.errorMessage = errorMessage
+    const { sut } = makeSut({ errorMessage })
     const emailInput = sut.getByTestId('email')
     fireEvent.input(emailInput, { target: { value: faker.internet.email() } })
     const emailError = sut.getByTestId('email-error')
@@ -63,9 +67,8 @@ describe('Login Component', () => {
   })
 
   test('Should show password error if Validation fails', () => {
-    const { sut, validationSpy } = makeSut()
     const errorMessage = faker.random.words()
-    validationSpy.errorMessage = errorMessage
+    const { sut } = makeSut({ errorMessage })
     const passwordInput = sut.getByTestId('password')
     fireEvent.input(passwordInput, { target: { value: faker.internet.password() } })
     const passwordError = sut.getByTestId('password-error')
