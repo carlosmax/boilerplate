@@ -10,8 +10,17 @@ type Props = {
   authentication: Authentication
 }
 
+type StateProps = {
+  email: string
+  password: string
+  emailError: string
+  passwordError: string
+  errorMessage: string
+  successMessage: string
+}
+
 const Login: React.FC<Props> = ({ validation, authentication }) => {
-  const [state, setState] = useState<any>({
+  const [state, setState] = useState<StateProps>({
     email: '',
     password: '',
     emailError: '',
@@ -35,18 +44,25 @@ const Login: React.FC<Props> = ({ validation, authentication }) => {
   }, [state.password])
 
   const disableSubmit = (): boolean => {
-    return !state.email || state.emailError || !state.password || state.passwordError
+    return !state.email || !!state.emailError || !state.password || !!state.passwordError
   }
 
   const isFormValid = (): boolean => {
-    return state.email && state.password
+    return !!state.email && !!state.password
   }
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault()
 
-    if (isFormValid()) {
-      await authentication.auth({ email: state.email, password: state.password })
+    try {
+      if (isFormValid()) {
+        await authentication.auth({ email: state.email, password: state.password })
+      }
+    } catch (error) {
+      setState((old: any) => ({
+        ...old,
+        errorMessage: error.message
+      }))
     }
   }
 
