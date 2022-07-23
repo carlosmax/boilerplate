@@ -1,3 +1,5 @@
 export * from './errors'
 export * from './protocols'
 export * from './validators'
+export * from './validation-builder'
+export * from './validation-composite'
