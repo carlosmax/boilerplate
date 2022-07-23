@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, RenderResult, fireEvent, cleanup, waitFor, screen } from '@testing-library/react'
+import { render, RenderResult, fireEvent, cleanup, screen, waitFor } from '@testing-library/react'
 import { Router } from 'react-router-dom'
 import { createMemoryHistory } from 'history'
 import { faker } from '@faker-js/faker'
@@ -155,24 +155,25 @@ describe('Login Component', () => {
     populateField('password')
     buttonClick('submit')
 
-    await waitFor(() => sut.getByTestId('form-error'))
+    await sut.findByTestId('form-error')
 
     testElementText('status-wrap', error.message)
   })
 
   test('Should add accessToken to localstorage on success', async () => {
-    const { sut, authenticationSpy } = makeSut()
+    const { authenticationSpy } = makeSut()
 
     populateField('email', faker.internet.email())
     populateField('password')
     buttonClick('submit')
 
-    await waitFor(() => sut.getByTestId('hiddenSuccess'))
+    await waitFor(() => {
+      expect(localStorage.setItem).toHaveBeenCalledWith(
+        'accessToken',
+        authenticationSpy.account.accessToken
+      )
+    })
 
-    expect(localStorage.setItem).toHaveBeenCalledWith(
-      'accessToken',
-      authenticationSpy.account.accessToken
-    )
     expect(history.location.pathname).toBe('/')
   })
 

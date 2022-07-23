@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import FormContext from '@/presentation/contexts/form/form-context'
 import { CustomCheckbox, FormStatus, Input } from '@/presentation/components'
-import { Validation } from '@/presentation/protocols'
+import { Validation } from '@monorepo/validation'
 import { Authentication } from '@/domain/usecases'
 import LoginAside from './login-aside'
 
@@ -34,14 +34,14 @@ const Login: React.FC<Props> = ({ validation, authentication }) => {
   useEffect(() => {
     setState({
       ...state,
-      emailError: validation.validate('email', state.email)
+      emailError: validation.validate('email', state.email as any)
     })
   }, [state.email])
 
   useEffect(() => {
     setState({
       ...state,
-      passwordError: validation.validate('password', state.password)
+      passwordError: validation.validate('password', state.password as any)
     })
   }, [state.password])
 
@@ -60,10 +60,6 @@ const Login: React.FC<Props> = ({ validation, authentication }) => {
       if (isFormValid()) {
         const account = await authentication.auth({ email: state.email, password: state.password })
         localStorage.setItem('accessToken', account.accessToken)
-        setState((old: any) => ({
-          ...old,
-          successMessage: 'Sucesso!'
-        }))
         navigate('/')
       }
     } catch (error) {
@@ -131,13 +127,6 @@ const Login: React.FC<Props> = ({ validation, authentication }) => {
                       </p>
                     </div>
                     <FormStatus error={state.errorMessage}></FormStatus>
-                    {state.successMessage && (
-                      <input
-                        data-testid='hiddenSuccess'
-                        type='hidden'
-                        value={state.successMessage}
-                      ></input>
-                    )}
                   </FormContext.Provider>
                 </div>
               </div>
