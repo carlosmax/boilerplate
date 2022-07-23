@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import FormContext from '@/presentation/contexts/form/form-context'
 import { CustomCheckbox, FormStatus, Input } from '@/presentation/components'
 import { Validation } from '@/presentation/protocols'
@@ -21,6 +21,7 @@ type StateProps = {
 }
 
 const Login: React.FC<Props> = ({ validation, authentication }) => {
+  const navigate = useNavigate()
   const [state, setState] = useState<StateProps>({
     email: '',
     password: '',
@@ -63,6 +64,7 @@ const Login: React.FC<Props> = ({ validation, authentication }) => {
           ...old,
           successMessage: 'Sucesso!'
         }))
+        navigate('/')
       }
     } catch (error) {
       setState((old: any) => ({
