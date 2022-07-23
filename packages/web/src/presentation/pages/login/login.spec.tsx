@@ -162,7 +162,7 @@ describe('Login Component', () => {
     const submitButton = sut.getByTestId('submit')
     fireEvent.click(submitButton)
 
-    await waitFor(() => sut.getByTestId('form-success'))
+    await waitFor(() => sut.getByTestId('hiddenSuccess'))
 
     expect(localStorage.setItem).toHaveBeenCalledWith(
       'accessToken',

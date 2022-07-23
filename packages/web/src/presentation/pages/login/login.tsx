@@ -130,10 +130,14 @@ const Login: React.FC<Props> = ({ validation, authentication }) => {
                         </Link>
                       </p>
                     </div>
-                    <FormStatus
-                      error={state.errorMessage}
-                      success={state.successMessage}
-                    ></FormStatus>
+                    <FormStatus error={state.errorMessage}></FormStatus>
+                    {state.successMessage && (
+                      <input
+                        data-testid='hiddenSuccess'
+                        type='hidden'
+                        value={state.successMessage}
+                      ></input>
+                    )}
                   </FormContext.Provider>
                 </div>
               </div>
