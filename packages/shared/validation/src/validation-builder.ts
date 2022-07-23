@@ -1,4 +1,4 @@
-import { FieldValidation } from '@/src/protocols'
+import { FieldValidation } from './protocols'
 import {
   RequiredFieldValidation,
   EmailValidation,
