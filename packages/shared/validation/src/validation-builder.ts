@@ -4,7 +4,7 @@ import {
   EmailValidation,
   MinLengthValidation,
   CompareFieldsValidation
-} from '@/src/validators'
+} from './validators'
 
 export class ValidationBuilder {
   private constructor(
