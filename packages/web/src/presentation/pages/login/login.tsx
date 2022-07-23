@@ -56,7 +56,12 @@ const Login: React.FC<Props> = ({ validation, authentication }) => {
 
     try {
       if (isFormValid()) {
-        await authentication.auth({ email: state.email, password: state.password })
+        const account = await authentication.auth({ email: state.email, password: state.password })
+        localStorage.setItem('accessToken', account.accessToken)
+        setState((old: any) => ({
+          ...old,
+          successMessage: 'Sucesso!'
+        }))
       }
     } catch (error) {
       setState((old: any) => ({

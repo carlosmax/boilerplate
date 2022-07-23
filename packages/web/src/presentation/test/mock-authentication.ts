@@ -4,8 +4,12 @@ import { mockAccountModel } from '@/domain/test'
 
 export class AuthenticationSpy implements Authentication {
   params: any
-  account = mockAccountModel()
+  account: AccountModel
   callsCount: number = 0
+
+  constructor() {
+    this.account = mockAccountModel()
+  }
 
   async auth(params: AuthenticationParams): Promise<AccountModel> {
     this.params = params

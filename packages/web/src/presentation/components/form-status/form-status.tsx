@@ -17,7 +17,12 @@ const FormStatus: React.FC<Props> = (props: Props) => {
         </div>
       )}
       {props.success && (
-        <div className='badge badge-pill badge-success border p-2 my-2 w-100'>{props.success}</div>
+        <div
+          data-testid='form-success'
+          className='badge badge-pill badge-success border p-2 my-2 w-100'
+        >
+          {props.success}
+        </div>
       )}
     </div>
   )
