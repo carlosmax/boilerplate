@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import FormContext from '@/presentation/contexts/form/form-context'
 import { CustomCheckbox, FormStatus, Input } from '@/presentation/components'
 import { Validation } from '@/presentation/protocols'
@@ -121,7 +122,10 @@ const Login: React.FC<Props> = ({ validation, authentication }) => {
                     </form>
                     <div className='new-account mt-3'>
                       <p>
-                        {"Don't have an account?"} <a className='text-primary'>Sign up</a>
+                        {"Don't have an account?"}{' '}
+                        <Link data-testid='signup' to='/signup' className='text-primary'>
+                          Sign up
+                        </Link>
                       </p>
                     </div>
                     <FormStatus
