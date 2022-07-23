@@ -1,4 +1,5 @@
 import React from 'react'
+import Styles from './form-status-styles.scss'
 
 type Props = {
   error?: string
@@ -11,7 +12,7 @@ const FormStatus: React.FC<Props> = (props: Props) => {
       {props.error && (
         <div
           data-testid='form-error'
-          className='badge badge-pill badge-danger border p-2 my-2 w-100'
+          className={`${Styles.error} badge badge-pill badge-danger border p-2 my-2 w-100`}
         >
           {props.error}
         </div>
