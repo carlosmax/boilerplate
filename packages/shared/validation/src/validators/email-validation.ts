@@ -8,6 +8,8 @@ export class EmailValidation implements FieldValidation {
     const emailRegex =
       // eslint-disable-next-line max-len
       /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
-    return !input[this.field] || emailRegex.test(input[this.field]) ? null : new InvalidFieldError()
+    return !input[this.field] || emailRegex.test(input[this.field])
+      ? null
+      : new InvalidFieldError('Endereço de email inválido')
   }
 }
