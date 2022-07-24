@@ -48,7 +48,11 @@ module.exports = {
     {
       files: ['**/*.tsx', '**/*.jsx', '**/*.js', '**/*.ts'],
       rules: {
-        'react-hooks/exhaustive-deps': 'off'
+        "react-hooks/exhaustive-deps": [
+          "warn", {
+            "additionalHooks": "(useRecoilCallback|useRecoilTransaction_UNSTABLE)"
+          }
+        ]
       }
     }
   ],
