@@ -14,7 +14,7 @@ module.exports = {
   testPathIgnorePatterns: ['<rootDir>/node_modules/'],
   testEnvironment: 'jsdom',
   transform: {
-    '.+\\.(ts|tsx)$': 'ts-jest'
+    '.+\\.(ts|tsx|js|jsx)$': 'ts-jest'
   },
   moduleNameMapper: {
     '@/(.*)$': '<rootDir>/src/$1',
