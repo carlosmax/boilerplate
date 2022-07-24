@@ -5,10 +5,11 @@ module.exports = {
   displayName: name,
   roots: ['<rootDir>'],
   collectCoverageFrom: [
-    '<rootDir>/**/*.ts', 
-    '!<rootDir>/**/*.d.ts'
+    '<rootDir>/src/**/*.ts',
+    '!<rootDir>/src/errors/*.ts',
+    '!<rootDir>/src/**/index.ts',
+    '!**/*.d.ts'
   ],
-  coverageDirectory: 'coverage',
   testPathIgnorePatterns: ['<rootDir>/node_modules/'],
   testEnvironment: 'jsdom',
   transform: {

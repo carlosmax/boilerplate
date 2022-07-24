@@ -10,7 +10,6 @@ module.exports = {
     '!<rootDir>/src/**/index.ts', 
     '!<rootDir>/**/*.d.ts'
   ],
-  coverageDirectory: 'coverage',
   testPathIgnorePatterns: ['<rootDir>/node_modules/'],
   testEnvironment: 'jsdom',
   transform: {
