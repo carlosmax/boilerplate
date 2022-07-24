@@ -31,6 +31,7 @@ module.exports = {
     '@typescript-eslint/no-namespace': 'off',
     'react/jsx-uses-react': 'error',
     'react/jsx-uses-vars': 'error',
+    "react/prop-types": 'off',
     'import/export': 'off',
     'jsx-a11y/anchor-is-valid': 'off',
     'jsx-a11y/anchor-has-content': 'off',
