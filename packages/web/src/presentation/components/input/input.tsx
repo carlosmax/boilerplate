@@ -1,23 +1,23 @@
-import React, { useContext } from 'react'
-import FormContext from '@/presentation/contexts/form/form-context'
+import React, { useRef } from 'react'
 
-type Props = {
-  id?: string
-  type: string
-  label?: string
-  className?: string
-  value?: string
-  placeholder?: string
-  errorMessage?: string
-  onChange?: React.ChangeEventHandler<HTMLInputElement>
+type Props = React.DetailedHTMLProps<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  HTMLInputElement
+> & {
+  label: string
+  state: any
+  setState: any
 }
 
-const Input: React.FC<Props> = (props: Props) => {
-  const { state, setState } = useContext(FormContext)
+const Input: React.FC<Props> = ({ state, setState, ...props }: Props) => {
+  const isDirty = useRef(false)
+  const error = state[`${props.name}Error`]
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    isDirty.current = true
     setState({
       ...state,
-      [event.target.id]: event.target.value
+      [event.target.name]: event.target.value
     })
   }
 
@@ -31,17 +31,14 @@ const Input: React.FC<Props> = (props: Props) => {
         <></>
       )}
       <input
-        data-testid={props.id}
-        id={props.id}
-        type={props.type}
+        {...props}
         className={props.className ?? 'form-control'}
-        value={props.value}
-        placeholder={props.placeholder}
         onChange={handleChange}
+        data-testid={props.name}
       />
 
-      <div data-testid={props.id ? `${props.id}-error` : ''} className='text-danger fs-12'>
-        {props.errorMessage}
+      <div data-testid={props.name ? `${props.name}-error` : ''} className='text-danger fs-12 pt-1'>
+        {isDirty.current ? error : ''}
       </div>
     </div>
   )
