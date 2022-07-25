@@ -1,4 +1,5 @@
-import { HttpPostClient } from '@/data/protocols'
+import { EmailInUseError } from '@monorepo/validation'
+import { HttpPostClient, HttpStatusCode } from '@/data/protocols'
 import { AddAccount } from '@/domain/usecases'
 
 export class RemoteAddAccount implements AddAccount {
@@ -8,10 +9,16 @@ export class RemoteAddAccount implements AddAccount {
   ) {}
 
   async add(params: AddAccount.Params): Promise<AddAccount.Model> {
-    await this.httpClient.post({
+    const response = await this.httpClient.post({
       url: this.url,
       body: params
     })
-    return null
+
+    switch (response.statusCode) {
+      case HttpStatusCode.forbidden:
+        throw new EmailInUseError()
+      default:
+        return null
+    }
   }
 }
