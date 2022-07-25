@@ -1,4 +1,4 @@
-import { EmailInUseError } from '@monorepo/validation'
+import { EmailInUseError, UnexpectedError } from '@monorepo/validation'
 import { HttpPostClient, HttpStatusCode } from '@/data/protocols'
 import { AddAccount } from '@/domain/usecases'
 
@@ -15,10 +15,12 @@ export class RemoteAddAccount implements AddAccount {
     })
 
     switch (response.statusCode) {
+      case HttpStatusCode.ok:
+        return null
       case HttpStatusCode.forbidden:
         throw new EmailInUseError()
       default:
-        return null
+        throw new UnexpectedError()
     }
   }
 }
