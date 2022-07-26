@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
-import { FormStatus, Input, Logo } from '@/presentation/components'
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
+import { currentAccountState, FormStatus, Input, Logo } from '@/presentation/components'
 import { Validation } from '@monorepo/validation'
 import { AddAccount } from '@/domain/usecases'
 import { signUpState, LoginLink } from './components'
@@ -13,17 +13,28 @@ type Props = {
 
 const Signup: React.FC<Props> = ({ validation, addAccount }) => {
   const navigate = useNavigate()
+  const resetSignUpState = useResetRecoilState(signUpState)
+  const { setCurrentAccount } = useRecoilValue(currentAccountState)
   const [state, setState] = useRecoilState(signUpState)
 
+  useEffect(() => resetSignUpState(), [])
+  useEffect(() => validate('name'), [state.name])
   useEffect(() => validate('email'), [state.email])
-
   useEffect(() => validate('password'), [state.password])
+  useEffect(() => validate('passwordConfirmation'), [state.passwordConfirmation])
 
   const validate = (field: string): void => {
-    const { email, password } = state
-    const formData = { email, password }
+    const { name, email, password, passwordConfirmation } = state
+    const formData = { name, email, password, passwordConfirmation }
     setState(old => ({ ...old, [`${field}Error`]: validation.validate(field, formData) }))
-    setState(old => ({ ...old, isFormInvalid: !!old.emailError || !!old.passwordError }))
+    setState(old => ({
+      ...old,
+      isFormInvalid:
+        !!old.nameError ||
+        !!old.emailError ||
+        !!old.passwordError ||
+        !!old.passwordConfirmationError
+    }))
   }
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
@@ -34,6 +45,14 @@ const Signup: React.FC<Props> = ({ validation, addAccount }) => {
         return
       }
 
+      const account = await addAccount.add({
+        name: state.name,
+        email: state.email,
+        password: state.password,
+        passwordConfirmation: state.passwordConfirmation
+      })
+      setCurrentAccount(account)
+      resetSignUpState()
       navigate('/')
     } catch (error) {
       setState((old: any) => ({
