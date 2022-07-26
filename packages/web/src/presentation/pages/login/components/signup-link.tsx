@@ -1,7 +1,7 @@
 import React, { memo } from 'react'
 import { Link } from 'react-router-dom'
 
-const LoginAside: React.FC = () => {
+const SignupLink: React.FC = () => {
   return (
     <div className='new-account mt-3'>
       <p>
@@ -14,4 +14,4 @@ const LoginAside: React.FC = () => {
   )
 }
 
-export default memo(LoginAside)
+export default memo(SignupLink)

@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { RecoilRoot } from 'recoil'
 import { setCurrentAccountAdapter, getCurrentAccountAdapter } from '@/main/adapters'
 import { currentAccountState } from '@/presentation/components'
-import { makeLogin } from './factories'
+import { makeLogin, makeSignup } from './factories'
 
 const Router: React.FC = () => {
   const state = {
@@ -15,7 +15,8 @@ const Router: React.FC = () => {
     <RecoilRoot initializeState={({ set }) => set(currentAccountState, state)}>
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={makeLogin()} />
+          <Route path='/login' element={makeLogin()} />
+          <Route path='/signup' element={makeSignup()} />
         </Routes>
       </BrowserRouter>
     </RecoilRoot>
