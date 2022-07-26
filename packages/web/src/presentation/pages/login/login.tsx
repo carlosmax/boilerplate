@@ -17,13 +17,9 @@ const Login: React.FC<Props> = ({ validation, authentication }) => {
   const { setCurrentAccount } = useRecoilValue(currentAccountState)
   const [state, setState] = useRecoilState(loginState)
 
-  useEffect(() => {
-    validate('email')
-  }, [state.email])
-
-  useEffect(() => {
-    validate('password')
-  }, [state.password])
+  useEffect(() => resetLoginState(), [])
+  useEffect(() => validate('email'), [state.email])
+  useEffect(() => validate('password'), [state.password])
 
   const validate = (field: string): void => {
     const { email, password } = state
@@ -42,7 +38,6 @@ const Login: React.FC<Props> = ({ validation, authentication }) => {
 
       const account = await authentication.auth({ email: state.email, password: state.password })
       setCurrentAccount(account)
-      resetLoginState()
       navigate('/')
     } catch (error) {
       setState((old: any) => ({
