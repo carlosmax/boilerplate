@@ -21,7 +21,11 @@ module.exports = {
     rules: [{
       test: /\.ts(x?)$/,
       loader: 'ts-loader',
-      exclude: /node_modules/
+      exclude: [
+        '/node_modules/',
+        '/cypress',
+        '/**/*.spec.ts'
+      ]
     }, {
       test: /\.(css|scss)$/,
       use: [{

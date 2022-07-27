@@ -10,7 +10,7 @@ module.exports = {
     '!<rootDir>/src/**/index.ts', 
     '!<rootDir>/**/*.d.ts'
   ],
-  testPathIgnorePatterns: ['<rootDir>/node_modules/'],
+  testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/cypress'],
   testEnvironment: 'jsdom',
   transform: {
     '.+\\.(ts|tsx|js|jsx)$': 'ts-jest'
