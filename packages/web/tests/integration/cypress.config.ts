@@ -7,7 +7,7 @@ export default defineConfig({
   e2e: {
     baseUrl: 'http://localhost:8080',
     fixturesFolder: false,
-    supportFile: 'cypress/support/index.js',
+    supportFile: './cypress/support/index.js',
     video: false,
     setupNodeEvents(on, config) {
       const options = {

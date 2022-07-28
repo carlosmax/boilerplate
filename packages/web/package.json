@@ -39,7 +39,7 @@
   },
   "scripts": {
     "start": "webpack-dev-server --open",
-    "test:e2e": "cypress open",
+    "test:e2e": "cypress open --project tests/integration",
     "sass": "node-sass src/presentation/styles/theme/main.scss public/css/main.css --source-map public/css/main.css.map",
     "sass:watch": "node-sass --watch src/presentation/styles/theme/main.scss public/css/main.css --source-map public/css/main.css.map"
   },
