@@ -6,7 +6,7 @@ const SignupLink: React.FC = () => {
     <div className='new-account mt-3'>
       <p>
         {"Don't have an account?"}{' '}
-        <Link data-testid='signup' to='/signup' className='text-primary'>
+        <Link data-testid='signup-link' to='/signup' className='text-primary'>
           Sign up
         </Link>
       </p>

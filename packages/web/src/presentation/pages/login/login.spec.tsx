@@ -139,7 +139,7 @@ describe('Login Component', () => {
 
   test('Should go to signup page', async () => {
     makeSut()
-    const signup = screen.getByTestId('signup')
+    const signup = screen.getByTestId('signup-link')
     fireEvent.click(signup)
     expect(history.location.pathname).toBe('/signup')
   })
