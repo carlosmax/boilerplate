@@ -117,4 +117,12 @@ describe('SignUp', () => {
     Helper.testUrl('/')
     Helper.testLocalStorageItem('account')
   })
+
+  it('Should prevent multiple submits', () => {
+    mockSuccess()
+    populateFields()
+    cy.getByTestId('submit').dblclick()
+    cy.wait('@signUpRequest')
+    cy.get('@signUpRequest.all').should('have.length', 1)
+  })
 })
