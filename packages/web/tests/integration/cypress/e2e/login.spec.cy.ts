@@ -6,12 +6,7 @@ import * as Http from '../utils/http-mocks'
 const path = /api\/login/
 
 const mockSuccess = (): void => {
-  cy.intercept('POST', /login/, {
-    statusCode: 200,
-    body: {
-      accessToken: faker.random.alphaNumeric(64)
-    }
-  })
+  Http.mockOk(path, 'POST', 'account', 'loginRequest')
 }
 
 const populateFields = (): void => {
@@ -104,5 +99,11 @@ describe('Login', () => {
     simulateValidSubmit()
     Helper.testUrl('/')
     Helper.testLocalStorageItem('account')
+  })
+
+  it('Should not call submit if form is invalid', () => {
+    mockSuccess()
+    cy.getByTestId('email').focus().type(faker.internet.email()).type('{enter}')
+    cy.get('@loginRequest.all').should('have.length', 0)
   })
 })
