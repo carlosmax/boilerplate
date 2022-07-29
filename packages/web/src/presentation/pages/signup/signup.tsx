@@ -52,7 +52,6 @@ const Signup: React.FC<Props> = ({ validation, addAccount }) => {
         passwordConfirmation: state.passwordConfirmation
       })
       setCurrentAccount(account)
-      resetSignUpState()
       navigate('/')
     } catch (error) {
       setState((old: any) => ({
