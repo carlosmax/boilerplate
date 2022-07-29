@@ -62,3 +62,8 @@ export const mockOk = (
     }
   ).as(alias)
 }
+
+export const mockUnexpectedError = (url: RegExp, method: string, statusCode: number): void =>
+  mockServerError(url, method, statusCode)
+
+export const mockInvalidCredentialsError = (url: RegExp): void => mockUnauthorizedError(url)

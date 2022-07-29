@@ -5,9 +5,6 @@ import * as Http from '../utils/http-mocks'
 
 const path = /api\/login/
 
-const mockInvalidCredentialsError = (): void => Http.mockUnauthorizedError(path)
-const mockUnexpectedError = (statusCode: number): void =>
-  Http.mockServerError(path, 'POST', statusCode)
 const mockSuccess = (): void => {
   cy.intercept('POST', /login/, {
     statusCode: 200,
@@ -66,14 +63,14 @@ describe('Login', () => {
   })
 
   it('Should present InvalidCredentialsError on 401', () => {
-    mockInvalidCredentialsError()
+    Http.mockInvalidCredentialsError(path)
     simulateValidSubmit()
     cy.getByTestId('form-error').should('contain.text', 'Credenciais inválidas')
     Helper.testUrl('/login')
   })
 
   it('Should present UnexpectedError on 400', () => {
-    mockUnexpectedError(400)
+    Http.mockUnexpectedError(path, 'POST', 400)
     simulateValidSubmit()
     cy.getByTestId('form-error').should(
       'contain.text',
@@ -83,7 +80,7 @@ describe('Login', () => {
   })
 
   it('Should present UnexpectedError on 404', () => {
-    mockUnexpectedError(404)
+    Http.mockUnexpectedError(path, 'POST', 404)
     simulateValidSubmit()
     cy.getByTestId('form-error').should(
       'contain.text',
@@ -93,7 +90,7 @@ describe('Login', () => {
   })
 
   it('Should present UnexpectedError on 500', () => {
-    mockUnexpectedError(500)
+    Http.mockUnexpectedError(path, 'POST', 500)
     simulateValidSubmit()
     cy.getByTestId('form-error').should(
       'contain.text',
