@@ -1,4 +1,5 @@
 import { faker } from '@faker-js/faker'
+import { Method } from 'axios'
 
 export const mockUnauthorizedError = (url: RegExp): void => {
   cy.intercept(
@@ -47,20 +48,14 @@ export const mockServerError = (url: RegExp, method: string, statusCode: number)
 
 export const mockOk = (
   url: RegExp,
-  method: string,
+  method: Method,
   fixture: string,
   alias: string = 'request'
 ): void => {
-  cy.intercept(
-    {
-      method,
-      url
-    },
-    {
-      statusCode: 200,
-      fixture
-    }
-  ).as(alias)
+  cy.intercept(method, url, {
+    statusCode: 200,
+    fixture
+  }).as(alias)
 }
 
 export const mockUnexpectedError = (url: RegExp, method: string, statusCode: number): void =>
