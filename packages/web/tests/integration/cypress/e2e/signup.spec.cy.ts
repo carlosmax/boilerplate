@@ -96,4 +96,14 @@ describe('SignUp', () => {
     )
     Helper.testUrl('/signup')
   })
+
+  it('Should present UnexpectedError on 500', () => {
+    Http.mockUnexpectedError(path, 'POST', 500)
+    simulateValidSubmit()
+    cy.getByTestId('form-error').should(
+      'contain.text',
+      'Algo de errado aconteceu. Tente novamente em breve.'
+    )
+    Helper.testUrl('/signup')
+  })
 })
