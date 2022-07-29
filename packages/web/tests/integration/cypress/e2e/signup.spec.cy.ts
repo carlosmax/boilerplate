@@ -76,4 +76,14 @@ describe('SignUp', () => {
     cy.getByTestId('form-error').should('contain.text', 'Esse e-mail já está em uso')
     Helper.testUrl('/signup')
   })
+
+  it('Should present UnexpectedError on 404', () => {
+    Http.mockUnexpectedError(path, 'POST', 404)
+    simulateValidSubmit()
+    cy.getByTestId('form-error').should(
+      'contain.text',
+      'Algo de errado aconteceu. Tente novamente em breve.'
+    )
+    Helper.testUrl('/signup')
+  })
 })
