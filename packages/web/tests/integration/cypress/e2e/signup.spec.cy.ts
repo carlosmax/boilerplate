@@ -5,6 +5,10 @@ import * as Http from '../utils/http-mocks'
 const path = /api\/signup/
 const mockEmailInUseError = (): void => Http.mockForbiddenError(path, 'POST')
 
+const mockSuccess = (): void => {
+  Http.mockOk(path, 'POST', 'account', 'signUpRequest')
+}
+
 const populateFields = (): void => {
   cy.getByTestId('name').type(faker.random.alphaNumeric(7))
   cy.getByTestId('email').type(faker.internet.email())
@@ -105,5 +109,12 @@ describe('SignUp', () => {
       'Algo de errado aconteceu. Tente novamente em breve.'
     )
     Helper.testUrl('/signup')
+  })
+
+  it('Should store account on localStorage if valid credentials are provided', () => {
+    mockSuccess()
+    simulateValidSubmit()
+    Helper.testUrl('/')
+    Helper.testLocalStorageItem('account')
   })
 })
