@@ -70,6 +70,16 @@ describe('SignUp', () => {
     cy.getByTestId('status-wrap').should('not.have.descendants')
   })
 
+  it('Should present UnexpectedError on 400', () => {
+    Http.mockUnexpectedError(path, 'POST', 400)
+    simulateValidSubmit()
+    cy.getByTestId('form-error').should(
+      'contain.text',
+      'Algo de errado aconteceu. Tente novamente em breve.'
+    )
+    Helper.testUrl('/signup')
+  })
+
   it('Should present EmailInUseError on 403', () => {
     mockEmailInUseError()
     simulateValidSubmit()
