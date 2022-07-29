@@ -24,4 +24,17 @@ describe('SignUp', () => {
     cy.getByTestId('email').should('be.empty')
     cy.getByTestId('email-error').should('be.empty')
   })
+
+  it('Should present error state if form is invalid', () => {
+    cy.getByTestId('name').type(faker.random.alphaNumeric(3))
+    cy.getByTestId('name-error').should('contain.text', 'Valor inválido')
+    cy.getByTestId('email').type(faker.random.word())
+    cy.getByTestId('email-error').should('contain.text', 'Endereço de email inválido')
+    cy.getByTestId('password').type(faker.random.alphaNumeric(3))
+    cy.getByTestId('password-error').should('contain.text', 'Valor inválido')
+    cy.getByTestId('passwordConfirmation').type(faker.random.alphaNumeric(4))
+    cy.getByTestId('passwordConfirmation-error').should('contain.text', 'Valor inválido')
+    cy.getByTestId('submit').should('have.attr', 'disabled')
+    cy.getByTestId('status-wrap').should('not.have.descendants')
+  })
 })
