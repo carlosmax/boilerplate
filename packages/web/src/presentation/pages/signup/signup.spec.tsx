@@ -1,7 +1,6 @@
 import { fireEvent, cleanup, screen, waitFor } from '@testing-library/react'
 import { createMemoryHistory } from 'history'
 import { faker } from '@faker-js/faker'
-import '@testing-library/jest-dom'
 import 'jest-localstorage-mock'
 
 import Signup from './signup'
