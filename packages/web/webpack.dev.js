@@ -50,6 +50,12 @@ module.exports = merge (common, {
     new CopyPlugin({
       patterns: [
         { from: "./public/styles/main.css", to: "./css" },
+        { from: "./public/images/favicon/favicon.ico", to: "./img/favicon" },
+        { from: "./public/images/favicon/favicon.png", to: "./img/favicon" },
+        { from: "./public/images/favicon/manifest.json", to: "./img/favicon" },
+        { from: "./public/images/logo/logo192.png", to: "./img/logo" },
+        { from: "./public/images/logo/logo512.png", to: "./img/logo" },
+        { from: "./public/robots.txt", to: "./" },
       ],
     })
   ]
