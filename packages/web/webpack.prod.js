@@ -39,7 +39,7 @@ module.exports =  merge (common, {
   },
   plugins: [
     new Dotenv({
-      path: `./.env.dev`
+      path: `./.env.prod`
     }),
     new HtmlWebpackPlugin({
       template: './template.prod.html'
