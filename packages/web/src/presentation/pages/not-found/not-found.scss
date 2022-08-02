@@ -1,5 +1,7 @@
-.error-page{
-	.error-text {
+@import "../../styles/mixin";
+
+.errorPage{
+	.errorText {
 		font-size: 9.375rem;
 		line-height: 1;
 		@include respond('phone') {
@@ -19,4 +21,10 @@
 			font-size: 0.875rem;
 		}
 	}
+}
+
+.error{
+	background:var(--rgba-primary-1);
+	display:flex;
+	min-height: 100vh;
 }

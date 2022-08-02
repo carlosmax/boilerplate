@@ -23296,26 +23296,6 @@ table.dataTable.display tbody td {
     height: 3.125rem;
     font-weight: 700; }
 
-.error-page .error-text {
-  font-size: 9.375rem;
-  line-height: 1; }
-  @media only screen and (max-width: 35.9375rem) {
-    .error-page .error-text {
-      font-size: 5rem; } }
-
-.error-page h4, .error-page .h4 {
-  font-size: 2.5rem;
-  margin-bottom: 0.3125rem; }
-  @media only screen and (max-width: 35.9375rem) {
-    .error-page h4, .error-page .h4 {
-      font-size: 1.25rem; } }
-
-.error-page p {
-  font-size: 1rem; }
-  @media only screen and (max-width: 35.9375rem) {
-    .error-page p {
-      font-size: 0.875rem; } }
-
 :root {
   --primary: #E23428;
   --secondary: #135846;

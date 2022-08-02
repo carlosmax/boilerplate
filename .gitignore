@@ -5,3 +5,5 @@ coverage
 yarn-error.log
 yarn.lock
 notes.txt
+.env.dev
+.env.prod

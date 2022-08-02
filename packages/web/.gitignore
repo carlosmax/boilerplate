@@ -3,3 +3,4 @@
 public/js
 /src/**/*.css
 /src/**/*.css.map
+dist
