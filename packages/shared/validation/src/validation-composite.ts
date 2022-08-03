@@ -1,6 +1,6 @@
-import { Validation, FieldValidation } from './protocols'
+import { Validation, FieldValidation, ValidationInput } from './protocols'
 
-export class ValidationComposite implements Validation {
+export class ValidationComposite implements Validation, ValidationInput {
   private constructor(private readonly validators: FieldValidation[]) {}
 
   static build(validators: FieldValidation[]): ValidationComposite {
@@ -13,6 +13,15 @@ export class ValidationComposite implements Validation {
       const error = validator.validate(input)
       if (error) {
         return error.message
+      }
+    }
+  }
+
+  validateInput(input: any): Error {
+    for (const validator of this.validators) {
+      const error = validator.validate(input)
+      if (error) {
+        return error
       }
     }
   }
