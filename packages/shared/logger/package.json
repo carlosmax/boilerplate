@@ -1,0 +1,10 @@
+{
+  "name": "@monorepo/logger",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^4.0.0",
+    "winston": "^3.7.2"
+  }
+}
