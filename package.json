@@ -5,7 +5,7 @@
   "author": "Carlos Max",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"yarn workspace @monorepo/server build:watch\" \"yarn workspace @monorepo/server dev\"",
+    "dev": "concurrently \"yarn workspace @monorepo/server build:watch\" \"yarn workspace @monorepo/server dev\" \"yarn workspace @monorepo/web dev\"",
     "lint:check": "eslint .",
     "lint:fix": "eslint . --fix",
     "prepare": "husky install",
