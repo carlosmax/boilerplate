@@ -1,7 +1,7 @@
+import winston from 'winston'
 import chalk from 'chalk'
-import winston, { format } from 'winston'
 
-const customFormat = format.printf((meta: any) => {
+const customFormat = winston.format.printf((meta: any) => {
   const { level, message, timestamp, namespace, func, stack, ...restMeta } = meta
   const displayNamespace = namespace ? `[${namespace}]` : ''
   const displayFunction = func ? ` (${func})` : ''
@@ -21,9 +21,9 @@ const logger = winston.createLogger({
   transports: [
     new winston.transports.Console({
       silent: process.env.NODE_ENV === 'production',
-      format: format.combine(
-        format.colorize(),
-        format.timestamp({
+      format: winston.format.combine(
+        winston.format.colorize(),
+        winston.format.timestamp({
           format: 'YYYY-MM-DD HH:mm:ss'
         }),
         customFormat
