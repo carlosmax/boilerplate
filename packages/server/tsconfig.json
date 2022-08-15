@@ -1,14 +1,15 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
+    "outDir": "dist",
     "sourceMap": true,
     "rootDirs": ["src", "tests"],
-    "baseUrl": "src",
+    "baseUrl": "./src",
     "paths": {
       "@/*": ["*"],
       "@/tests/*": ["../tests/*"]
     }
   },
-  "include": ["src", "tests"],
+  "include": ["src", "tests", "tests/setup-tests.ts"],
   "exclude": ["node_modules"]
 }

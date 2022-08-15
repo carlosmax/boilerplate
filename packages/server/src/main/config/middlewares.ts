@@ -3,9 +3,9 @@ import helmet from 'helmet'
 import morgan from 'morgan'
 
 import express, { Express } from 'express'
-import { Logger } from '@/infra'
+// import { Logger } from '@monorepo/logger'
 
-const LOGGER = Logger('ROUTE')
+// const LOGGER = Logger('ROUTE')
 
 export default (app: Express): void => {
   app.use(cors({ origin: process.env.CORS_ORIGIN }))
@@ -14,7 +14,8 @@ export default (app: Express): void => {
 
   const stream = {
     write: (text: string) => {
-      LOGGER.info(text)
+      // LOGGER.info(text)
+      console.log(text)
     }
   }
 
