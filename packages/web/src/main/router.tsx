@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { RecoilRoot } from 'recoil'
 import { setCurrentAccountAdapter, getCurrentAccountAdapter } from '@/main/adapters'
 import { currentAccountState } from '@/presentation/components'
-import { makeLogin, makeSignup } from './factories'
+import { makeLogin, makeSignup, makeDashboard } from './factories'
 import { NotFound } from '@/presentation/pages'
 
 const Router: React.FC = () => {
@@ -18,6 +18,7 @@ const Router: React.FC = () => {
         <Routes>
           <Route path='/login' element={makeLogin()} />
           <Route path='/signup' element={makeSignup()} />
+          <Route path='/' element={makeDashboard()} />
           <Route path='*' element={<NotFound />} />
         </Routes>
       </BrowserRouter>
