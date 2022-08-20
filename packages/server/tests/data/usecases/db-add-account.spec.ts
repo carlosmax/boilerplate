@@ -59,24 +59,24 @@ describe('DbAddAccount Usecase', () => {
     await expect(promise).rejects.toThrow()
   })
 
-  test('Should return true on success', async () => {
-    const { sut } = makeSut()
-    const isValid = await sut.add(mockAddAccountParams())
-    expect(isValid).toBe(true)
-  })
-
-  test('Should return false if AddAccountRepository returns false', async () => {
+  test('Should return the created account on success', async () => {
     const { sut, addAccountRepositorySpy } = makeSut()
-    addAccountRepositorySpy.result = false
-    const isValid = await sut.add(mockAddAccountParams())
-    expect(isValid).toBe(false)
+    const savedAccount = await sut.add(mockAddAccountParams())
+    expect(savedAccount).toEqual(addAccountRepositorySpy.result)
   })
 
-  test('Should return false if CheckAccountByEmailRepository returns true', async () => {
+  test('Should return null if AddAccountRepository returns null', async () => {
+    const { sut, addAccountRepositorySpy } = makeSut()
+    addAccountRepositorySpy.result = null
+    const savedAccount = await sut.add(mockAddAccountParams())
+    expect(savedAccount).toBe(null)
+  })
+
+  test('Should return null if CheckAccountByEmailRepository returns true', async () => {
     const { sut, checkAccountByEmailRepositorySpy } = makeSut()
     checkAccountByEmailRepositorySpy.result = true
-    const isValid = await sut.add(mockAddAccountParams())
-    expect(isValid).toBe(false)
+    const savedAccount = await sut.add(mockAddAccountParams())
+    expect(savedAccount).toBe(null)
   })
 
   test('Should call LoadAccountByEmailRepository with correct email', async () => {

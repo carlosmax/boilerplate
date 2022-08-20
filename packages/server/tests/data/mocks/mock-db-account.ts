@@ -5,12 +5,14 @@ import {
   UpdateAccessTokenRepository,
   CheckAccountByEmailRepository
 } from '@/data/protocols'
+import { Account } from '@/domain/models'
 
 import { faker } from '@faker-js/faker'
+import { mockAddAccount } from '../../domain/mocks'
 
 export class AddAccountRepositorySpy implements AddAccountRepository {
   params: AddAccountRepository.Params
-  result = true
+  result: Account = mockAddAccount()
 
   async add(params: AddAccountRepository.Params): Promise<AddAccountRepository.Result> {
     this.params = params
