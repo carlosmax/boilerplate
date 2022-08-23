@@ -1,6 +1,5 @@
 const path = require("path");
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-const Dotenv = require('dotenv-webpack')
 
 module.exports = {
   mode: 'development',
@@ -12,7 +11,7 @@ module.exports = {
     filename: '[name]-bundle-[fullhash].js'
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.scss', '.css'],
+    extensions: ['.ts', '.tsx', '.js', '.scss', '.css', '.png', 'jpg', 'jpeg', 'gif'],
     alias: {
       '@': path.join(__dirname, 'src')
     }

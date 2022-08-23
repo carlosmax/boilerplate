@@ -31,6 +31,17 @@ module.exports = merge (common, {
           sourceMap: true,
         }
       }]
+    }, {
+      test: /\.(woff|woff2|eot|ttf|otf)$/i,
+      type: "asset/resource"
+    }, {
+      test: /\.(png|jpeg|jpg|gif)$/i,
+      type: "asset/resource",
+      parser: {
+        dataUrlCondition: {
+          maxSize: 8192
+        }
+      }
     }]
   },
   devServer: {
@@ -49,7 +60,7 @@ module.exports = merge (common, {
     }),
     new CopyPlugin({
       patterns: [
-        { from: "./public/styles/main.css", to: "./css" },
+        { from: "./public/css/main.css", to: "./css" },
         { from: "./public/images/favicon/favicon.ico", to: "./img/favicon" },
         { from: "./public/images/favicon/favicon.png", to: "./img/favicon" },
         { from: "./public/images/favicon/manifest.json", to: "./img/favicon" },
