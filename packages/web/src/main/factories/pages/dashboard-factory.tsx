@@ -1,11 +1,13 @@
 import React, { ReactElement } from 'react'
 import { Dashboard } from '@/presentation/pages'
-import { PrivateRoute } from '@/main/proxies'
+import Layout from '@/presentation/layouts'
 
 export const makeDashboard = (): ReactElement<any, any> => {
   return (
-    <PrivateRoute>
+    // <PrivateRoute>
+    <Layout>
       <Dashboard />
-    </PrivateRoute>
+    </Layout>
+    // </PrivateRoute>
   )
 }

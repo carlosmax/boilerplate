@@ -9,3 +9,16 @@ export const currentAccountState = atom({
     setCurrentAccount: null as (account: AccountModel) => void
   }
 })
+
+export const sideBarStyleState = atom({
+  key: 'sideBarStyleState',
+  default: {
+    value: 'full',
+    label: 'Full'
+  }
+})
+
+export const menuToggleState = atom({
+  key: 'menuToggleState',
+  default: false
+})
