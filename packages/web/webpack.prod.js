@@ -1,63 +1,109 @@
-const Dotenv = require('dotenv-webpack')
+const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
-const { merge } = require('webpack-merge')
-const common = require('./webpack.common')
+const TerserPlugin = require('terser-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const {
+  outputConfig,
+  copyPluginPatterns,
+  entryConfig,
+  scssConfig,
+  terserPluginConfig
+} = require('./env.config')
 
-module.exports =  merge (common, {
-  mode: 'production',  
-  module: {
-    rules: [{
-      test: /\.ts(x?)$/,
-      loader: 'ts-loader',
-      exclude: [
-        '/node_modules/',
-        '/cypress',
-        '/**/*.spec.ts'
-      ]
-    }, {
-      test: /\.(css|scss)$/,
-      use: [{
-        loader: MiniCssExtractPlugin.loader
-      }, {
-        loader: 'css-loader',
-        options: {
-          modules: true
+module.exports = (env, options) => {
+  return {
+    mode: 'production',
+    entry: entryConfig,
+    module: {
+      rules: [
+        {
+          test: /\.tsx?$/,
+          use: 'ts-loader',
+          exclude: ['/node_modules/', '/cypress', '/**/*.spec.ts']
+        },
+        {
+          test: /\.css$/,
+          use: [
+            MiniCssExtractPlugin.loader,
+            'css-loader',
+            {
+              loader: 'postcss-loader',
+              options: {
+                postcssOptions: {
+                  plugins: [['postcss-preset-env']]
+                }
+              }
+            }
+          ]
+        },
+        {
+          test: /\.scss$/,
+          use: [
+            MiniCssExtractPlugin.loader,
+            'css-loader',
+            {
+              loader: 'postcss-loader',
+              options: {
+                postcssOptions: {
+                  plugins: [['postcss-preset-env']]
+                }
+              }
+            },
+            'sass-loader'
+          ]
+        },
+        {
+          test: /\.(ico|png|jpeg|jpg|gif|svg)$/i,
+          type: 'asset/resource',
+          parser: {
+            dataUrlCondition: {
+              maxSize: 8192
+            }
+          }
+        },
+        {
+          test: /\.(woff|woff2|eot|ttf|otf|svg)$/i,
+          type: 'asset/resource'
         }
-      }, {
-        loader: 'sass-loader'
-      }]
-    }]
-  },
-  externals: {
-    react: 'React',
-    axios: 'axios',
-    recoil: 'Recoil',
-    'react-dom': 'ReactDOM',
-    'react-router-dom': 'ReactRouterDOM'
-  },
-  plugins: [
-    new Dotenv({
-      path: `./.env.prod`
-    }),
-    new HtmlWebpackPlugin({
-      template: './template.prod.html'
-    }),
-    new MiniCssExtractPlugin({
-      filename: 'main-bundle-[fullhash].css',
-      linkType: "text/css"
-    }),
-    new CopyPlugin({
-      patterns: [
-        { from: "./public/styles/main.min.css", to: "./css" },
-        { from: "./public/images/favicon/favicon.ico", to: "./img/favicon" },
-        { from: "./public/images/favicon/favicon.png", to: "./img/favicon" },
-        { from: "./public/images/favicon/manifest.json", to: "./img/favicon" },
-        { from: "./public/images/logo/logo192.png", to: "./img/logo" },
-        { from: "./public/images/logo/logo512.png", to: "./img/logo" },
-        { from: "./public/robots.txt", to: "./" },
-      ],
-    })
-  ]
-})
+      ]
+    },
+    resolve: {
+      extensions: ['.ts', '.tsx', '.js', '.scss'],
+      alias: {
+        '@': path.join(__dirname, 'src')
+      }
+    },
+    output: {
+      filename: 'js/[name]-[fullhash].js',
+      path: path.resolve(__dirname, outputConfig.destPath),
+      sourceMapFilename: 'js/[name].[fullhash].map',
+      chunkFilename: 'js/[id]-[chunkhash].js',
+      publicPath: ''
+    },
+    optimization: {
+      minimizer: [new TerserPlugin(terserPluginConfig)],
+      splitChunks: {
+        chunks: 'all'
+      }
+    },
+    externals: {
+      react: 'React',
+      axios: 'axios',
+      recoil: 'Recoil',
+      'react-dom': 'ReactDOM',
+      'react-router-dom': 'ReactRouterDOM'
+    },
+    plugins: [
+      new CleanWebpackPlugin(),
+      new CopyPlugin(copyPluginPatterns),
+      new MiniCssExtractPlugin({ filename: scssConfig.destFileName }),
+      new HtmlWebpackPlugin({
+        template: './public/template.prod.html',
+        inject: 'body',
+        minify: false
+      })
+    ]
+  }
+}
