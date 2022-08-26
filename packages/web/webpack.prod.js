@@ -1,4 +1,5 @@
 const path = require('path')
+const DotEnv = require('dotenv-webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
@@ -96,6 +97,9 @@ module.exports = (env, options) => {
       'react-router-dom': 'ReactRouterDOM'
     },
     plugins: [
+      new DotEnv({
+        path: './.env.prod'
+    }),
       new CleanWebpackPlugin(),
       new CopyPlugin(copyPluginPatterns),
       new MiniCssExtractPlugin({ filename: scssConfig.destFileName }),
