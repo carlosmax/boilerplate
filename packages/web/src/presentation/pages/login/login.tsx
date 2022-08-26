@@ -1,10 +1,13 @@
 import React, { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
-import { currentAccountState, CustomCheckbox, FormStatus, Input } from '@/presentation/components'
+import { Alert, Button, Card, CardBody, Col, Container, Form, Input, Label, Row } from 'reactstrap'
+import { currentAccountState, CustomInput } from '@/presentation/components'
 import { Validation } from '@monorepo/validation'
 import { Authentication } from '@/domain/usecases'
-import { Aside, loginState, Signup } from './components'
+import { loginState, Signup } from './components'
+
+import logoDark from '@/presentation/assets/images/logo-dark.png'
 
 type Props = {
   validation: Validation
@@ -47,56 +50,116 @@ const Login: React.FC<Props> = ({ validation, authentication }) => {
     }
   }
 
+  const handleShowPassword = (): void => {
+    setState((old: any) => ({
+      ...old,
+      showPassword: !state.showPassword
+    }))
+  }
+
+  document.title = 'Login'
   return (
-    <div className={`authentication d-flex flex-column flex-lg-row flex-column-fluid`}>
-      <Aside></Aside>
-      <div className='container flex-row-fluid d-flex flex-column justify-content-center position-relative overflow-hidden p-7 mx-auto'>
-        <div className='d-flex justify-content-center h-100 align-items-center'>
-          <div className={`authentication-content style-2`}>
-            <div className='row no-gutters'>
-              <div className='col-xl-12 tab-content'>
-                <div id='sign-in' className={`auth-form form-validation`}>
-                  <form data-testid='form' onSubmit={handleSubmit} className='form-validate'>
-                    <h3 className='text-center mb-4 text-black'>Sign in your account</h3>
-                    <Input
-                      name='email'
-                      label='Email'
-                      type='email'
-                      placeholder='Type Your Email Address'
-                      state={state}
-                      setState={setState}
-                    ></Input>
-                    <Input
-                      name='password'
-                      label='Password'
-                      type='password'
-                      placeholder='Type Your Password'
-                      state={state}
-                      setState={setState}
-                    ></Input>
-                    <div className='form-row d-flex justify-content-between mt-4 mb-2'>
-                      <CustomCheckbox id='remember' label='Remember my preference'></CustomCheckbox>
-                    </div>
-                    <div className='text-center form-group mb-3'>
-                      <button
-                        data-testid='submit'
-                        type='submit'
-                        className='btn btn-primary btn-block'
-                        disabled={state.isFormInvalid}
-                      >
-                        Sign In
-                      </button>
-                    </div>
-                  </form>
-                  <Signup></Signup>
-                  <FormStatus error={state.mainError}></FormStatus>
+    <>
+      <div className='auth-page-content'>
+        <Container>
+          <Row>
+            <Col lg={12}>
+              <div className='text-center mt-sm-5 mb-4 text-white-50'>
+                <div>
+                  <Link to='/' className='d-inline-block auth-logo'>
+                    <img src={logoDark} alt='' height='20' />
+                  </Link>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
+            </Col>
+          </Row>
+          <Row className='justify-content-center'>
+            <Col md={8} lg={6} xl={5}>
+              <Card className='mt-4'>
+                <CardBody className='p-4'>
+                  <div className='text-center mt-2'>
+                    <h5 className='text-primary'>Welcome Back !</h5>
+                    <p className='text-muted'>Sign in to continue to Velzon.</p>
+                  </div>
+                  {state.mainError ? (
+                    <Alert data-testid='form-error' color='danger'>
+                      {state.mainError}
+                    </Alert>
+                  ) : null}
+                  <div className='p-2 mt-4'>
+                    <Form data-testid='form' onSubmit={handleSubmit} action='#'>
+                      <div className='mb-3'>
+                        <CustomInput
+                          name='email'
+                          label='Email'
+                          type='email'
+                          placeholder='Type Your Email Address'
+                          state={state}
+                          setState={setState}
+                        ></CustomInput>
+                      </div>
+                      <div className='mb-3'>
+                        <Label className='form-label' htmlFor='password-input'>
+                          Password
+                        </Label>
+                        <div className='position-relative auth-pass-inputgroup mb-3'>
+                          <CustomInput
+                            name='password'
+                            label='Password'
+                            type={state.showPassword ? 'text' : 'password'}
+                            placeholder='Type Your Password'
+                            state={state}
+                            setState={setState}
+                          ></CustomInput>
+                          <button
+                            className='btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted'
+                            type='button'
+                            id='password-addon'
+                          >
+                            <i
+                              className='ri-eye-fill align-middle'
+                              onClick={handleShowPassword}
+                            ></i>
+                          </button>
+                        </div>
+                      </div>
+                      <div className='form-check'>
+                        <div className='float-end'>
+                          <Link to='/forgot-password' className='text-muted'>
+                            Forgot password?
+                          </Link>
+                        </div>
+                        <Input
+                          className='form-check-input'
+                          type='checkbox'
+                          value=''
+                          id='remember'
+                        />
+                        <Label className='form-check-label' htmlFor='auth-remember-check'>
+                          Remember me
+                        </Label>
+                      </div>
+                      <div className='mt-4'>
+                        <Button
+                          data-testid='submit'
+                          color='success'
+                          className='btn btn-success w-100'
+                          type='submit'
+                          disabled={state.isFormInvalid}
+                        >
+                          Sign In
+                        </Button>
+                      </div>
+                    </Form>
+                  </div>
+                </CardBody>
+              </Card>
+              <Signup></Signup>
+            </Col>
+          </Row>
+        </Container>
       </div>
-    </div>
+    </>
   )
 }
 

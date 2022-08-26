@@ -1,6 +1,6 @@
 export * from './atoms/atoms'
 export { default as Logo } from './logo/logo'
-export { default as Input } from './input/input'
+export { default as CustomInput } from './input/input'
 export { default as CustomCheckbox } from './custom-checkbox/custom-checkbox'
 export { default as FormStatus } from './form-status/form-status'
 export { default as NavHeader } from './nav-header/nav-header'

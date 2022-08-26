@@ -55,10 +55,12 @@ describe('Login Component', () => {
 
   test('Should start with initial state', () => {
     makeSut()
-    const statusWrap = screen.getByTestId('status-wrap')
-    expect(statusWrap.childElementCount).toBe(0)
-    Helper.testElementText('email-error', '')
-    Helper.testElementText('password-error', '')
+    const formError = screen.queryByTestId('form-error')
+    const emailError = screen.queryByTestId('email-error')
+    const passwordError = screen.queryByTestId('password-error')
+    expect(formError).toBeNull()
+    expect(emailError).toBeNull()
+    expect(passwordError).toBeNull()
     // Helper.testButtonIsDisabled('submit', true)
   })
 
@@ -79,13 +81,15 @@ describe('Login Component', () => {
   test('Should show valid email state if Validation succeeds', () => {
     makeSut()
     Helper.populateField('email')
-    Helper.testElementText('email-error', '')
+    const emailError = screen.queryByTestId('email-error')
+    expect(emailError).toBeNull()
   })
 
   test('Should show valid password state if Validation succeeds', () => {
     makeSut()
     Helper.populateField('password')
-    Helper.testElementText('password-error', '')
+    const passwordError = screen.queryByTestId('password-error')
+    expect(passwordError).toBeNull()
   })
 
   test('Should enable submit button if form is valid', () => {
@@ -125,7 +129,7 @@ describe('Login Component', () => {
     await simulateValidSubmit()
     await screen.findByTestId('form-error')
 
-    Helper.testElementText('status-wrap', error.message)
+    Helper.testElementText('form-error', error.message)
   })
 
   test('Should call UpdateCurrentAccount on success', async () => {

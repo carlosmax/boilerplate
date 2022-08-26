@@ -30,7 +30,7 @@ const Navbar: React.FC = () => {
     <React.Fragment>
       <nav className={'navbar navbar-expand-lg navbar-landing fixed-top ' + navClass} id='navbar'>
         <Container>
-          <Link className='navbar-brand' to='/index'>
+          <Link className='navbar-brand' to='/'>
             <img src={logodark} className='card-logo card-logo-dark' alt='logo dark' height='17' />
             <img
               src={logolight}
@@ -88,7 +88,7 @@ const Navbar: React.FC = () => {
               <Link to='/login' className='btn btn-link fw-medium text-decoration-none text-dark'>
                 Sign in
               </Link>
-              <Link to='/register' className='btn btn-primary'>
+              <Link to='/signup' className='btn btn-primary'>
                 Sign Up
               </Link>
             </div>

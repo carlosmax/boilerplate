@@ -14,10 +14,11 @@ module.exports = {
   testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/cypress'],
   testEnvironment: 'jsdom',
   transform: {
-    '.+\\.(ts|tsx|js|jsx)$': 'ts-jest'
+    '.+\\.(ts|tsx|js|jsx)$': 'ts-jest',
+    ".+\\.(css|scss|png|jpg)$": 'jest-transform-stub'
   },
   moduleNameMapper: {
     '@/(.*)$': '<rootDir>/src/$1',
-    '\\.scss': 'identity-obj-proxy'
+    ".+\\.(css|scss|png|jpg)$": 'jest-transform-stub'
   }
 }

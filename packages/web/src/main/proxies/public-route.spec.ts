@@ -18,7 +18,7 @@ describe('PublicRoute', () => {
   test('Should redirect to / if token is not empty', () => {
     const { history } = makeSut()
 
-    expect(history.location.pathname).toBe('/')
+    expect(history.location.pathname).toBe('/dashboard')
   })
 
   test('Should render current component if token is empty', () => {

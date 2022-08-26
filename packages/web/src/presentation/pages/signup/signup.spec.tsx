@@ -58,13 +58,16 @@ describe('Signup Component', () => {
 
   test('Should start with initial state', () => {
     makeSut()
-    const statusWrap = screen.getByTestId('status-wrap')
-    expect(statusWrap.childElementCount).toBe(0)
-    // expect(screen.getByTestId('submit')).toBeDisabled()
-    Helper.testElementText('name-error', '')
-    Helper.testElementText('email-error', '')
-    Helper.testElementText('password-error', '')
-    Helper.testElementText('passwordConfirmation-error', '')
+    const formError = screen.queryByTestId('form-error')
+    const nameError = screen.queryByTestId('name-error')
+    const emailError = screen.queryByTestId('email-error')
+    const passwordError = screen.queryByTestId('password-error')
+    const passwordConfirmationError = screen.queryByTestId('passwordConfirmation-error')
+    expect(formError).toBeNull()
+    expect(nameError).toBeNull()
+    expect(emailError).toBeNull()
+    expect(passwordError).toBeNull()
+    expect(passwordConfirmationError).toBeNull()
   })
 
   test('Should show name error if Validation fails', () => {
@@ -101,26 +104,30 @@ describe('Signup Component', () => {
     makeSut()
 
     Helper.populateField('name')
-    Helper.testElementText('name-error', '')
+    const nameError = screen.queryByTestId('name-error')
+    expect(nameError).toBeNull()
   })
 
   test('Should show valid email state if Validation succeeds', () => {
     makeSut()
     Helper.populateField('email')
-    Helper.testElementText('email-error', '')
+    const emailError = screen.queryByTestId('email-error')
+    expect(emailError).toBeNull()
   })
 
   test('Should show valid password state if Validation succeeds', () => {
     makeSut()
     Helper.populateField('password')
-    Helper.testElementText('password-error', '')
+    const passwordError = screen.queryByTestId('password-error')
+    expect(passwordError).toBeNull()
   })
 
   test('Should show valid passwordConfirmation state if Validation succeeds', () => {
     makeSut()
 
     Helper.populateField('passwordConfirmation')
-    Helper.testElementText('passwordConfirmation-error', '')
+    const passwordConfirmationError = screen.queryByTestId('passwordConfirmation-error')
+    expect(passwordConfirmationError).toBeNull()
   })
 
   test('Should enable submit button if form is valid', () => {
@@ -162,7 +169,7 @@ describe('Signup Component', () => {
     await simulateValidSubmit()
     await screen.findByTestId('form-error')
 
-    Helper.testElementText('status-wrap', error.message)
+    Helper.testElementText('form-error', error.message)
   })
 
   // test('Should call UpdateCurrentAccount on success', async () => {

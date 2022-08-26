@@ -3,10 +3,14 @@ import { Link } from 'react-router-dom'
 
 const LoginLink: React.FC = () => {
   return (
-    <div className='new-account mt-3'>
-      <p>
+    <div className='mt-4 text-center'>
+      <p className='mb-0'>
         Already have an account?{' '}
-        <Link data-testid='login-link' to='/login' className='text-primary'>
+        <Link
+          data-testid='login-link'
+          to='/login'
+          className='fw-semibold text-primary text-decoration-underline'
+        >
           Sign in
         </Link>
       </p>

@@ -1,10 +1,17 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
-import { currentAccountState, FormStatus, Input, Logo } from '@/presentation/components'
+import { Container, Row, Col, Card, CardBody, Form, Alert } from 'reactstrap'
+
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
+import { currentAccountState, CustomInput } from '@/presentation/components'
 import { Validation } from '@monorepo/validation'
 import { AddAccount } from '@/domain/usecases'
 import { signUpState, LoginLink } from './components'
+
+import logoDark from '@/presentation/assets/images/logo-dark.png'
 
 type Props = {
   validation: Validation
@@ -16,13 +23,9 @@ const Signup: React.FC<Props> = ({ validation, addAccount }) => {
   const resetSignUpState = useResetRecoilState(signUpState)
   const { setCurrentAccount } = useRecoilValue(currentAccountState)
   const [state, setState] = useRecoilState(signUpState)
+  const [success, setSuccess] = useState(false)
 
-  useEffect(() => resetSignUpState(), [])
-  useEffect(() => validate('name'), [state.name])
-  useEffect(() => validate('email'), [state.email])
-  useEffect(() => validate('password'), [state.password])
-  useEffect(() => validate('passwordConfirmation'), [state.passwordConfirmation])
-
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const validate = (field: string): void => {
     const { name, email, password, passwordConfirmation } = state
     const formData = { name, email, password, passwordConfirmation }
@@ -52,7 +55,7 @@ const Signup: React.FC<Props> = ({ validation, addAccount }) => {
         passwordConfirmation: state.passwordConfirmation
       })
       setCurrentAccount(account)
-      navigate('/')
+      setSuccess(true)
     } catch (error) {
       setState((old: any) => ({
         ...old,
@@ -61,74 +64,140 @@ const Signup: React.FC<Props> = ({ validation, addAccount }) => {
     }
   }
 
+  useEffect(() => resetSignUpState(), [])
+  useEffect(() => validate('name'), [state.name])
+  useEffect(() => validate('email'), [state.email])
+  useEffect(() => validate('password'), [state.password])
+  useEffect(() => validate('passwordConfirmation'), [state.passwordConfirmation])
+  useEffect(() => {
+    if (success) {
+      setTimeout(() => navigate('/dasboard'), 3000)
+    }
+  }, [success])
+
+  document.title = 'Sign Up'
+
   return (
-    <div className='authentication h-100 p-meddle'>
-      <div className='container flex-row-fluid d-flex flex-column justify-content-center position-relative overflow-hidden'>
-        <div className='row justify-content-center h-100 align-items-center'>
-          <div className='col-md-6'>
-            <div className='authentication-content'>
-              <div className='row no-gutters'>
-                <div className='col-xl-12'>
-                  <div id='sign-up' className='auth-form'>
-                    <div className='text-center mb-3'>
-                      <Link to='/login'>
-                        <Logo></Logo>
-                      </Link>
-                    </div>
-                    <h4 className='text-center mb-4 '>Sign up your account</h4>
-                    <form data-testid='form' onSubmit={handleSubmit}>
-                      <Input
+    <div className='auth-page-content'>
+      <Container>
+        <Row>
+          <Col lg={12}>
+            <div className='text-center mt-sm-5 mb-4 text-white-50'>
+              <div>
+                <Link to='/' className='d-inline-block auth-logo'>
+                  <img src={logoDark} alt='' height='20' />
+                </Link>
+              </div>
+              <p className='mt-3 fs-15 fw-medium'>{`Premium Admin & Dashboard Template`}</p>
+            </div>
+          </Col>
+        </Row>
+
+        <Row className='justify-content-center'>
+          <Col md={8} lg={6} xl={5}>
+            <Card className='mt-4'>
+              <CardBody className='p-4'>
+                <div className='text-center mt-2'>
+                  <h5 className='text-primary'>Create New Account</h5>
+                  <p className='text-muted'>Get your free velzon account now</p>
+                </div>
+                <div className='p-2 mt-4'>
+                  <Form
+                    data-testid='form'
+                    onSubmit={handleSubmit}
+                    className='needs-validation'
+                    action='#'
+                  >
+                    {success && success ? (
+                      <>
+                        {toast('Your Been Redirect To Login Page...', {
+                          position: 'top-right',
+                          hideProgressBar: false,
+                          className: 'bg-success text-white',
+                          progress: undefined,
+                          toastId: ''
+                        })}
+                        <ToastContainer autoClose={2000} limit={1} />
+                        <Alert color='success'>
+                          {`Register User Successfully and You'll Be Redirect To Login Page...`}
+                        </Alert>
+                      </>
+                    ) : null}
+
+                    {state.mainError ? (
+                      <Alert data-testid='form-error' color='danger'>
+                        <div>{state.mainError}</div>
+                      </Alert>
+                    ) : null}
+                    <div className='mb-3'>
+                      <CustomInput
                         name='name'
                         label='Name'
                         type='text'
                         placeholder='Name'
                         state={state}
                         setState={setState}
-                      ></Input>
-                      <Input
+                      ></CustomInput>
+                    </div>
+                    <div className='mb-3'>
+                      <CustomInput
                         name='email'
                         label='Email'
                         type='email'
                         placeholder='Email'
                         state={state}
                         setState={setState}
-                      ></Input>
-                      <Input
+                      ></CustomInput>
+                    </div>
+                    <div className='mb-3'>
+                      <CustomInput
                         name='password'
                         label='Password'
                         type='password'
                         placeholder='Password'
                         state={state}
                         setState={setState}
-                      ></Input>
-                      <Input
+                      ></CustomInput>
+                    </div>
+                    <div className='mb-3'>
+                      <CustomInput
                         name='passwordConfirmation'
                         label='Password Confirmation'
                         type='password'
                         placeholder='Password Confirmation'
                         state={state}
                         setState={setState}
-                      ></Input>
-                      <div className='text-center mt-4'>
-                        <button
-                          data-testid='submit'
-                          type='submit'
-                          className='btn btn-primary btn-block'
-                          disabled={state.isFormInvalid}
+                      ></CustomInput>
+                    </div>
+                    <div className='mb-4'>
+                      <p className='mb-0 fs-12 text-muted fst-italic'>
+                        By registering you agree to the Velzon{' '}
+                        <Link
+                          to='#'
+                          className='text-primary text-decoration-underline fst-normal fw-medium'
                         >
-                          Sign me up
-                        </button>
-                      </div>
-                    </form>
-                    <LoginLink></LoginLink>
-                    <FormStatus error={state.mainError}></FormStatus>
-                  </div>
+                          Terms of Use
+                        </Link>
+                      </p>
+                    </div>
+                    <div className='mt-4'>
+                      <button
+                        data-testid='submit'
+                        type='submit'
+                        className='btn btn-success w-100'
+                        disabled={state.isFormInvalid}
+                      >
+                        Sign me up
+                      </button>
+                    </div>
+                  </Form>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+              </CardBody>
+            </Card>
+            <LoginLink></LoginLink>
+          </Col>
+        </Row>
+      </Container>
     </div>
   )
 }

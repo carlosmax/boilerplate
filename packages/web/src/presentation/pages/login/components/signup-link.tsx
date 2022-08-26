@@ -3,12 +3,17 @@ import { Link } from 'react-router-dom'
 
 const SignupLink: React.FC = () => {
   return (
-    <div className='new-account mt-3'>
-      <p>
+    <div className='mt-4 text-center'>
+      <p className='mb-0'>
         {"Don't have an account?"}{' '}
-        <Link data-testid='signup-link' to='/signup' className='text-primary'>
-          Sign up
-        </Link>
+        <Link
+          data-testid='signup-link'
+          to='/signup'
+          className='fw-semibold text-primary text-decoration-underline'
+        >
+          {' '}
+          Sign up{' '}
+        </Link>{' '}
       </p>
     </div>
   )

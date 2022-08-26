@@ -1,15 +1,18 @@
 import React, { useRef } from 'react'
+import { FormFeedback, Input } from 'reactstrap'
+import { InputType } from 'reactstrap/types/lib/Input'
 
 type Props = React.DetailedHTMLProps<
   React.InputHTMLAttributes<HTMLInputElement>,
   HTMLInputElement
 > & {
+  type: InputType
   label: string
   state: any
   setState: any
 }
 
-const Input: React.FC<Props> = ({ state, setState, ...props }: Props) => {
+const CustomInput: React.FC<Props> = ({ state, setState, ...props }: Props) => {
   const isDirty = useRef(false)
   const error = state[`${props.name}Error`]
 
@@ -22,26 +25,24 @@ const Input: React.FC<Props> = ({ state, setState, ...props }: Props) => {
   }
 
   return (
-    <div className='form-group mb-3'>
-      {props.label ? (
-        <label className='mb-1' htmlFor={props.id}>
-          <strong>{props.label}</strong>
-        </label>
-      ) : (
-        <></>
-      )}
-      <input
-        {...props}
-        className={props.className ?? 'form-control'}
-        onChange={handleChange}
+    <>
+      <Input
         data-testid={props.name}
+        name={props.name}
+        value={props.value}
+        type={props.type}
+        className={`form-control ${props.className}`}
+        placeholder={props.placeholder}
+        onChange={handleChange}
+        invalid={!!(isDirty.current && error)}
       />
-
-      <div data-testid={props.name ? `${props.name}-error` : ''} className='text-danger fs-12 pt-1'>
-        {isDirty.current ? error : ''}
-      </div>
-    </div>
+      {isDirty.current && error ? (
+        <FormFeedback data-testid={props.name ? `${props.name}-error` : ''} type='invalid'>
+          {error}
+        </FormFeedback>
+      ) : null}
+    </>
   )
 }
 
-export default Input
+export default CustomInput

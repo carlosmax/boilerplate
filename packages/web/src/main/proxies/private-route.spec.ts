@@ -9,7 +9,7 @@ type SutTypes = {
 }
 
 const makeSut = (account = mockAccountModel()): SutTypes => {
-  const history = createMemoryHistory({ initialEntries: ['/'] })
+  const history = createMemoryHistory({ initialEntries: ['/dashboard'] })
   renderWithHistory({ history, Page: PrivateRoute, account })
   return { history }
 }
@@ -24,6 +24,6 @@ describe('PrivateRoute', () => {
   test('Should render current component if token is not empty', () => {
     const { history } = makeSut()
 
-    expect(history.location.pathname).toBe('/')
+    expect(history.location.pathname).toBe('/dashboard')
   })
 })
