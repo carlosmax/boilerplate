@@ -1,30 +1,36 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import Styles from './not-found.scss'
+import { Container, Row, Col } from 'reactstrap'
+
+import error400cover from '@/presentation/assets/images/error400-cover.png'
 
 const NotFound: React.FC = () => {
+  document.title = '404 Error Cover | Velzon - React Admin & Dashboard Template'
   return (
-    <div className={`${Styles.error} h-100 d-flex flex-column flex-column-fluid`}>
-      <div className='container flex-row-fluid d-flex flex-column justify-content-center'>
-        <div className='row justify-content-center h-100 align-items-center '>
-          <div className='col-md-5'>
-            <div className={`form-input-content text-center ${Styles.errorPage}`}>
-              <h1 className={`${Styles.errorText} font-weight-bold`}>404</h1>
-              <h4>
-                <i className='fa fa-exclamation-triangle text-warning' /> The page you were looking
-                for is not found!
-              </h4>
-              <p>You may have mistyped the address or the page may have moved.</p>
-              <div>
-                <Link className='btn btn-primary' to='/'>
-                  Back to Home
-                </Link>
-              </div>
-            </div>
+    <React.Fragment>
+      <div className='auth-page-content'>
+        <div className='auth-page-wrapper py-5 d-flex justify-content-center align-items-center min-vh-100'>
+          <div className='auth-page-content overflow-hidden p-0'>
+            <Container>
+              <Row className='justify-content-center'>
+                <Col xl={7} lg={8}>
+                  <div className='text-center'>
+                    <img src={error400cover} alt='error img' className='img-fluid' />
+                    <div className='mt-3'>
+                      <h3 className='text-uppercase'>Sorry, Page not Found 😭</h3>
+                      <p className='text-muted mb-4'>The page you are looking for not available!</p>
+                      <Link to='/dashboard' className='btn btn-success'>
+                        <i className='mdi mdi-home me-1'></i>Back to home
+                      </Link>
+                    </div>
+                  </div>
+                </Col>
+              </Row>
+            </Container>
           </div>
         </div>
       </div>
-    </div>
+    </React.Fragment>
   )
 }
 
