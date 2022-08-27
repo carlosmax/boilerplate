@@ -36,4 +36,11 @@ describe('DbGeneratePasswordReset UseCase', () => {
     const promise = sut.generate(mockGeneratePasswordResetParams())
     await expect(promise).rejects.toThrow()
   })
+
+  test('Should return false if LoadAccountByEmailRepository returns null', async () => {
+    const { sut, loadAccountByEmailRepositorySpy } = makeSut()
+    loadAccountByEmailRepositorySpy.result = null
+    const result = await sut.generate(mockGeneratePasswordResetParams())
+    expect(result).toBe(false)
+  })
 })
