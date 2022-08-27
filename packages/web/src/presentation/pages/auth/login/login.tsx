@@ -125,7 +125,11 @@ const Login: React.FC<Props> = ({ validation, authentication }) => {
                       </div>
                       <div className='form-check'>
                         <div className='float-end'>
-                          <Link to='/forgot-password' className='text-muted'>
+                          <Link
+                            data-testid='forgot-password-link'
+                            to='/forgot-password'
+                            className='text-muted'
+                          >
                             Forgot password?
                           </Link>
                         </div>
