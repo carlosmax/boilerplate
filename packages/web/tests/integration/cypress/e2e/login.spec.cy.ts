@@ -25,10 +25,10 @@ describe('Login', () => {
   })
 
   it('Should load with correct initial state', () => {
-    cy.getByTestId('email-error').should('be.empty')
-    cy.getByTestId('password-error').should('be.empty')
+    cy.getByTestId('email-error').should('not.exist')
+    cy.getByTestId('password-error').should('not.exist')
     cy.getByTestId('submit').should('have.attr', 'disabled')
-    cy.getByTestId('status-wrap').should('not.have.descendants')
+    cy.getByTestId('form-error').should('not.exist')
   })
 
   it('Should reset state on page load', () => {
@@ -36,7 +36,7 @@ describe('Login', () => {
     cy.getByTestId('signup-link').click()
     cy.getByTestId('login-link').click()
     cy.getByTestId('email').should('be.empty')
-    cy.getByTestId('email-error').should('be.empty')
+    cy.getByTestId('email-error').should('not.exist')
   })
 
   it('Should present error state if form is invalid', () => {
@@ -45,16 +45,16 @@ describe('Login', () => {
     cy.getByTestId('password').type(faker.random.alphaNumeric(3))
     cy.getByTestId('password-error').should('contain.text', 'Valor inválido')
     cy.getByTestId('submit').should('have.attr', 'disabled')
-    cy.getByTestId('status-wrap').should('not.have.descendants')
+    cy.getByTestId('form-error').should('not.exist')
   })
 
   it('Should present valid state if form is valid', () => {
     cy.getByTestId('email').type(faker.internet.email())
-    cy.getByTestId('email-error').should('be.empty')
+    cy.getByTestId('email-error').should('not.exist')
     cy.getByTestId('password').type(faker.random.alphaNumeric(5))
-    cy.getByTestId('password-error').should('be.empty')
+    cy.getByTestId('password-error').should('not.exist')
     cy.getByTestId('submit').should('not.have.attr', 'disabled')
-    cy.getByTestId('status-wrap').should('not.have.descendants')
+    cy.getByTestId('form-error').should('not.exist')
   })
 
   it('Should present InvalidCredentialsError on 401', () => {

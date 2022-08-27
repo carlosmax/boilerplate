@@ -44,7 +44,7 @@ const Signup: React.FC<Props> = ({ validation, addAccount }) => {
     event.preventDefault()
 
     try {
-      if (state.isFormInvalid) {
+      if (state.isFormInvalid || success) {
         return
       }
 
@@ -71,7 +71,7 @@ const Signup: React.FC<Props> = ({ validation, addAccount }) => {
   useEffect(() => validate('passwordConfirmation'), [state.passwordConfirmation])
   useEffect(() => {
     if (success) {
-      setTimeout(() => navigate('/dasboard'), 3000)
+      setTimeout(() => navigate('/dashboard'), 3000)
     }
   }, [success])
 

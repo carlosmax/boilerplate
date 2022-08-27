@@ -28,12 +28,12 @@ describe('SignUp', () => {
   })
 
   it('Should load with correct initial state', () => {
-    cy.getByTestId('name-error').should('be.empty')
-    cy.getByTestId('email-error').should('be.empty')
-    cy.getByTestId('password-error').should('be.empty')
-    cy.getByTestId('passwordConfirmation-error').should('be.empty')
+    cy.getByTestId('name-error').should('not.exist')
+    cy.getByTestId('email-error').should('not.exist')
+    cy.getByTestId('password-error').should('not.exist')
+    cy.getByTestId('passwordConfirmation-error').should('not.exist')
     cy.getByTestId('submit').should('have.attr', 'disabled')
-    cy.getByTestId('status-wrap').should('not.have.descendants')
+    cy.getByTestId('form-error').should('not.exist')
   })
 
   it('Should reset state on page load', () => {
@@ -42,9 +42,9 @@ describe('SignUp', () => {
     cy.getByTestId('login-link').click()
     cy.getByTestId('signup-link').click()
     cy.getByTestId('name').should('be.empty')
-    cy.getByTestId('name-error').should('be.empty')
+    cy.getByTestId('name-error').should('not.exist')
     cy.getByTestId('email').should('be.empty')
-    cy.getByTestId('email-error').should('be.empty')
+    cy.getByTestId('email-error').should('not.exist')
   })
 
   it('Should present error state if form is invalid', () => {
@@ -57,21 +57,21 @@ describe('SignUp', () => {
     cy.getByTestId('passwordConfirmation').type(faker.random.alphaNumeric(4))
     cy.getByTestId('passwordConfirmation-error').should('contain.text', 'Valor inválido')
     cy.getByTestId('submit').should('have.attr', 'disabled')
-    cy.getByTestId('status-wrap').should('not.have.descendants')
+    cy.getByTestId('form-error').should('not.exist')
   })
 
   it('Should present valid state if form is valid', () => {
     cy.getByTestId('name').type(faker.internet.email())
-    cy.getByTestId('name-error').should('be.empty')
+    cy.getByTestId('name-error').should('not.exist')
     cy.getByTestId('email').type(faker.internet.email())
-    cy.getByTestId('email-error').should('be.empty')
+    cy.getByTestId('email-error').should('not.exist')
     const password = faker.random.alphaNumeric(5)
     cy.getByTestId('password').type(password)
-    cy.getByTestId('password-error').should('be.empty')
+    cy.getByTestId('password-error').should('not.exist')
     cy.getByTestId('passwordConfirmation').type(password)
-    cy.getByTestId('passwordConfirmation-error').should('be.empty')
+    cy.getByTestId('passwordConfirmation-error').should('not.exist')
     cy.getByTestId('submit').should('not.have.attr', 'disabled')
-    cy.getByTestId('status-wrap').should('not.have.descendants')
+    cy.getByTestId('form-error').should('not.exist')
   })
 
   it('Should present UnexpectedError on 400', () => {
@@ -114,7 +114,7 @@ describe('SignUp', () => {
   it('Should store account on localStorage if valid credentials are provided', () => {
     mockSuccess()
     simulateValidSubmit()
-    Helper.testUrl('/')
+    Helper.testUrl('/dashboard')
     Helper.testLocalStorageItem('account')
   })
 
