@@ -3,7 +3,8 @@ import {
   LoadAccountByEmailRepository,
   LoadAccountByTokenRepository,
   UpdateAccessTokenRepository,
-  CheckAccountByEmailRepository
+  CheckAccountByEmailRepository,
+  UpdateResetPasswordTokenRepository
 } from '@/data/protocols'
 import { Account } from '@/domain/models'
 
@@ -63,6 +64,16 @@ export class UpdateAccessTokenRepositorySpy implements UpdateAccessTokenReposito
   token: string
 
   async updateAccessToken(id: string, token: string): Promise<void> {
+    this.id = id
+    this.token = token
+  }
+}
+
+export class UpdateResetPasswordTokenRepositorySpy implements UpdateResetPasswordTokenRepository {
+  id: string
+  token: string
+
+  async updateResetPasswordToken(id: string, token: string): Promise<void> {
     this.id = id
     this.token = token
   }

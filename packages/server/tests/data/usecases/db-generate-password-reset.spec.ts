@@ -1,30 +1,40 @@
+import { faker } from '@faker-js/faker'
+
 import { DbGeneratePasswordReset } from '@/data/usecases'
 import { GeneratePasswordReset } from '@/domain/usecases'
-import { faker } from '@faker-js/faker'
-import { throwError } from '../../domain/mocks'
-import { EncrypterSpy, LoadAccountByEmailRepositorySpy, RandomHexGeneratorSpy } from '../mocks'
+import { throwError } from '@/tests/domain/mocks'
+import {
+  EncrypterSpy,
+  LoadAccountByEmailRepositorySpy,
+  RandomHexGeneratorSpy,
+  UpdateResetPasswordTokenRepositorySpy
+} from '@/tests/data/mocks'
 
 type SutTypes = {
   sut: DbGeneratePasswordReset
   loadAccountByEmailRepositorySpy: LoadAccountByEmailRepositorySpy
   encrypterSpy: EncrypterSpy
-  randomHexGenerator: RandomHexGeneratorSpy
+  randomHexGeneratorSpy: RandomHexGeneratorSpy
+  updateResetPasswordTokenRepositorySpy: UpdateResetPasswordTokenRepositorySpy
 }
 
 const makeSut = (): SutTypes => {
   const loadAccountByEmailRepositorySpy = new LoadAccountByEmailRepositorySpy()
   const encrypterSpy = new EncrypterSpy()
-  const randomHexGenerator = new RandomHexGeneratorSpy()
+  const randomHexGeneratorSpy = new RandomHexGeneratorSpy()
+  const updateResetPasswordTokenRepositorySpy = new UpdateResetPasswordTokenRepositorySpy()
   const sut = new DbGeneratePasswordReset(
     loadAccountByEmailRepositorySpy,
-    randomHexGenerator,
-    encrypterSpy
+    randomHexGeneratorSpy,
+    encrypterSpy,
+    updateResetPasswordTokenRepositorySpy
   )
   return {
     sut,
     loadAccountByEmailRepositorySpy,
     encrypterSpy,
-    randomHexGenerator
+    randomHexGeneratorSpy,
+    updateResetPasswordTokenRepositorySpy
   }
 }
 
@@ -55,9 +65,9 @@ describe('DbGeneratePasswordReset UseCase', () => {
   })
 
   test('Should call Encrypter with correct plaintext', async () => {
-    const { sut, encrypterSpy, randomHexGenerator } = makeSut()
+    const { sut, encrypterSpy, randomHexGeneratorSpy } = makeSut()
     await sut.generate(mockGeneratePasswordResetParams())
-    expect(encrypterSpy.plaintext).toBe(randomHexGenerator.hex)
+    expect(encrypterSpy.plaintext).toBe(randomHexGeneratorSpy.hex)
   })
 
   test('Should throw if Encrypter throws', async () => {
@@ -65,5 +75,17 @@ describe('DbGeneratePasswordReset UseCase', () => {
     jest.spyOn(encrypterSpy, 'encrypt').mockImplementationOnce(throwError)
     const promise = sut.generate(mockGeneratePasswordResetParams())
     await expect(promise).rejects.toThrow()
+  })
+
+  test('Should call UpdateResetPasswordTokenRepository with correct values', async () => {
+    const {
+      sut,
+      updateResetPasswordTokenRepositorySpy,
+      encrypterSpy,
+      loadAccountByEmailRepositorySpy
+    } = makeSut()
+    await sut.generate(mockGeneratePasswordResetParams())
+    expect(updateResetPasswordTokenRepositorySpy.id).toBe(loadAccountByEmailRepositorySpy.result.id)
+    expect(updateResetPasswordTokenRepositorySpy.token).toBe(encrypterSpy.ciphertext)
   })
 })
