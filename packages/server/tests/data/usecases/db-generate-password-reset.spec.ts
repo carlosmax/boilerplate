@@ -7,6 +7,7 @@ import {
   EncrypterSpy,
   LoadAccountByEmailRepositorySpy,
   RandomHexGeneratorSpy,
+  SendResetPasswordMessageSpy,
   UpdateResetPasswordTokenRepositorySpy
 } from '@/tests/data/mocks'
 
@@ -16,6 +17,7 @@ type SutTypes = {
   encrypterSpy: EncrypterSpy
   randomHexGeneratorSpy: RandomHexGeneratorSpy
   updateResetPasswordTokenRepositorySpy: UpdateResetPasswordTokenRepositorySpy
+  sendResetPasswordMessageSpy: SendResetPasswordMessageSpy
 }
 
 const makeSut = (): SutTypes => {
@@ -23,18 +25,21 @@ const makeSut = (): SutTypes => {
   const encrypterSpy = new EncrypterSpy()
   const randomHexGeneratorSpy = new RandomHexGeneratorSpy()
   const updateResetPasswordTokenRepositorySpy = new UpdateResetPasswordTokenRepositorySpy()
+  const sendResetPasswordMessageSpy = new SendResetPasswordMessageSpy()
   const sut = new DbGeneratePasswordReset(
     loadAccountByEmailRepositorySpy,
     randomHexGeneratorSpy,
     encrypterSpy,
-    updateResetPasswordTokenRepositorySpy
+    updateResetPasswordTokenRepositorySpy,
+    sendResetPasswordMessageSpy
   )
   return {
     sut,
     loadAccountByEmailRepositorySpy,
     encrypterSpy,
     randomHexGeneratorSpy,
-    updateResetPasswordTokenRepositorySpy
+    updateResetPasswordTokenRepositorySpy,
+    sendResetPasswordMessageSpy
   }
 }
 
@@ -87,5 +92,13 @@ describe('DbGeneratePasswordReset UseCase', () => {
     await sut.generate(mockGeneratePasswordResetParams())
     expect(updateResetPasswordTokenRepositorySpy.id).toBe(loadAccountByEmailRepositorySpy.result.id)
     expect(updateResetPasswordTokenRepositorySpy.token).toBe(encrypterSpy.ciphertext)
+  })
+
+  test('Should call SendResetPasswordMessage with correct values', async () => {
+    const { sut, loadAccountByEmailRepositorySpy, encrypterSpy, sendResetPasswordMessageSpy } =
+      makeSut()
+    await sut.generate(mockGeneratePasswordResetParams())
+    expect(sendResetPasswordMessageSpy.userId).toBe(loadAccountByEmailRepositorySpy.result.id)
+    expect(sendResetPasswordMessageSpy.resetToken).toBe(encrypterSpy.plaintext)
   })
 })
