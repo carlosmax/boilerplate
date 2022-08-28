@@ -1,4 +1,4 @@
-import { Hasher, HashComparer, Encrypter, Decrypter } from '@/data/protocols'
+import { Hasher, HashComparer, Encrypter, Decrypter, RandomHexGenerator } from '@/data/protocols'
 
 import { faker } from '@faker-js/faker'
 
@@ -41,5 +41,15 @@ export class DecrypterSpy implements Decrypter {
   async decrypt(ciphertext: string): Promise<string> {
     this.ciphertext = ciphertext
     return this.plaintext
+  }
+}
+
+export class RandomHexGeneratorSpy implements RandomHexGenerator {
+  hex = faker.random.alphaNumeric(20)
+  numBytes: number
+
+  generate(numBytes: number): string {
+    this.numBytes = numBytes
+    return this.hex
   }
 }

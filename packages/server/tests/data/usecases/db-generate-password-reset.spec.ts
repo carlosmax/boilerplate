@@ -2,19 +2,29 @@ import { DbGeneratePasswordReset } from '@/data/usecases'
 import { GeneratePasswordReset } from '@/domain/usecases'
 import { faker } from '@faker-js/faker'
 import { throwError } from '../../domain/mocks'
-import { LoadAccountByEmailRepositorySpy } from '../mocks'
+import { EncrypterSpy, LoadAccountByEmailRepositorySpy, RandomHexGeneratorSpy } from '../mocks'
 
 type SutTypes = {
   sut: DbGeneratePasswordReset
   loadAccountByEmailRepositorySpy: LoadAccountByEmailRepositorySpy
+  encrypterSpy: EncrypterSpy
+  randomHexGenerator: RandomHexGeneratorSpy
 }
 
 const makeSut = (): SutTypes => {
   const loadAccountByEmailRepositorySpy = new LoadAccountByEmailRepositorySpy()
-  const sut = new DbGeneratePasswordReset(loadAccountByEmailRepositorySpy)
+  const encrypterSpy = new EncrypterSpy()
+  const randomHexGenerator = new RandomHexGeneratorSpy()
+  const sut = new DbGeneratePasswordReset(
+    loadAccountByEmailRepositorySpy,
+    randomHexGenerator,
+    encrypterSpy
+  )
   return {
     sut,
-    loadAccountByEmailRepositorySpy
+    loadAccountByEmailRepositorySpy,
+    encrypterSpy,
+    randomHexGenerator
   }
 }
 
@@ -42,5 +52,11 @@ describe('DbGeneratePasswordReset UseCase', () => {
     loadAccountByEmailRepositorySpy.result = null
     const result = await sut.generate(mockGeneratePasswordResetParams())
     expect(result).toBe(false)
+  })
+
+  test('Should call Encrypter with correct plaintext', async () => {
+    const { sut, encrypterSpy, randomHexGenerator } = makeSut()
+    await sut.generate(mockGeneratePasswordResetParams())
+    expect(encrypterSpy.plaintext).toBe(randomHexGenerator.hex)
   })
 })
