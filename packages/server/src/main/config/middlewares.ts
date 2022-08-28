@@ -8,7 +8,7 @@ import express, { Express } from 'express'
 // const LOGGER = Logger('ROUTE')
 
 export default (app: Express): void => {
-  app.use(cors({ origin: process.env.CORS_ORIGIN }))
+  app.use(cors({ origin: process.env.CLIENT_URL }))
   app.use(helmet())
   app.use(express.json())
 
