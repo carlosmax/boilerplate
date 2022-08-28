@@ -4,9 +4,9 @@ import morgan from 'morgan'
 
 import express, { Express } from 'express'
 import env from '@/main/config/env'
-// import { Logger } from '@monorepo/logger'
+import { Logger } from '@monorepo/logger'
 
-// const LOGGER = Logger('ROUTE')
+const LOGGER = Logger('ROUTE')
 
 export default (app: Express): void => {
   app.use(cors({ origin: env.clientUrl }))
@@ -15,8 +15,7 @@ export default (app: Express): void => {
 
   const stream = {
     write: (text: string) => {
-      // LOGGER.info(text)
-      console.log(text)
+      LOGGER.info(text)
     }
   }
 
