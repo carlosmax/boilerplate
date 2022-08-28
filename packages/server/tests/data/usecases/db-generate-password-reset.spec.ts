@@ -59,4 +59,11 @@ describe('DbGeneratePasswordReset UseCase', () => {
     await sut.generate(mockGeneratePasswordResetParams())
     expect(encrypterSpy.plaintext).toBe(randomHexGenerator.hex)
   })
+
+  test('Should throw if Encrypter throws', async () => {
+    const { sut, encrypterSpy } = makeSut()
+    jest.spyOn(encrypterSpy, 'encrypt').mockImplementationOnce(throwError)
+    const promise = sut.generate(mockGeneratePasswordResetParams())
+    await expect(promise).rejects.toThrow()
+  })
 })
