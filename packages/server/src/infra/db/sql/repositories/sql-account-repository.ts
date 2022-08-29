@@ -4,8 +4,10 @@ import {
   LoadAccountByTokenRepository,
   UpdateAccessTokenRepository,
   AddAccountRepository,
-  CheckAccountByEmailRepository
+  CheckAccountByEmailRepository,
+  UpdateResetPasswordTokenRepository
 } from '@/data/protocols'
+import { addHours } from '@/infra/helpers'
 import { AddAccount } from '@/domain/usecases'
 import { AccountDbFactory } from '../factories'
 import { AccountDb, AccountModel } from '../models'
@@ -16,6 +18,7 @@ export class SqlAccountRepository
     LoadAccountByTokenRepository,
     LoadAccountByEmailRepository,
     UpdateAccessTokenRepository,
+    UpdateResetPasswordTokenRepository,
     AddAccountRepository,
     CheckAccountByEmailRepository
 {
@@ -41,10 +44,6 @@ export class SqlAccountRepository
     return await this.accountDb.findOne({ where: { email } })
   }
 
-  async updateAccessToken(id: string, token: string): Promise<void> {
-    await this.accountDb.update({ token }, { where: { id } })
-  }
-
   async add(data: AddAccount.Params): Promise<AccountModel> {
     return await this.accountDb.create(data)
   }
@@ -52,5 +51,14 @@ export class SqlAccountRepository
   async checkByEmail(email: string): Promise<boolean> {
     const account = await this.loadByEmail(email)
     return account != null
+  }
+
+  async updateAccessToken(id: string, token: string): Promise<void> {
+    await this.accountDb.update({ token }, { where: { id } })
+  }
+
+  async updateResetPasswordToken(id: string, resetPasswordToken: string): Promise<void> {
+    const resetPasswordExpires = addHours(new Date(), 1)
+    await this.accountDb.update({ resetPasswordToken, resetPasswordExpires }, { where: { id } })
   }
 }

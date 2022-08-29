@@ -6,6 +6,7 @@ export interface Account {
   phone: string
   token: string
   resetPasswordToken: string
+  resetPasswordExpires: Date
   createdAt: Date
   updatedAt: Date
 }

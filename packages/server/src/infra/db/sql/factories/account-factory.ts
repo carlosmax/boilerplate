@@ -29,6 +29,10 @@ export function AccountDbFactory(): AccountDb {
       type: DataTypes.STRING,
       allowNull: true
     },
+    resetPasswordExpires: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
     phone: DataTypes.STRING,
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE
