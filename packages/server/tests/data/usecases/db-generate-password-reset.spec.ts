@@ -7,7 +7,7 @@ import {
   EncrypterSpy,
   LoadAccountByEmailRepositorySpy,
   RandomHexGeneratorSpy,
-  SendResetPasswordMessageSpy,
+  ResetPasswordEmailProviderSpy,
   UpdateResetPasswordTokenRepositorySpy
 } from '@/tests/data/mocks'
 
@@ -17,7 +17,7 @@ type SutTypes = {
   encrypterSpy: EncrypterSpy
   randomHexGeneratorSpy: RandomHexGeneratorSpy
   updateResetPasswordTokenRepositorySpy: UpdateResetPasswordTokenRepositorySpy
-  sendResetPasswordMessageSpy: SendResetPasswordMessageSpy
+  resetPasswordEmailProviderSpy: ResetPasswordEmailProviderSpy
 }
 
 const makeSut = (): SutTypes => {
@@ -25,13 +25,13 @@ const makeSut = (): SutTypes => {
   const encrypterSpy = new EncrypterSpy()
   const randomHexGeneratorSpy = new RandomHexGeneratorSpy()
   const updateResetPasswordTokenRepositorySpy = new UpdateResetPasswordTokenRepositorySpy()
-  const sendResetPasswordMessageSpy = new SendResetPasswordMessageSpy()
+  const resetPasswordEmailProviderSpy = new ResetPasswordEmailProviderSpy()
   const sut = new DbGeneratePasswordReset(
     loadAccountByEmailRepositorySpy,
     randomHexGeneratorSpy,
     encrypterSpy,
     updateResetPasswordTokenRepositorySpy,
-    sendResetPasswordMessageSpy
+    resetPasswordEmailProviderSpy
   )
   return {
     sut,
@@ -39,7 +39,7 @@ const makeSut = (): SutTypes => {
     encrypterSpy,
     randomHexGeneratorSpy,
     updateResetPasswordTokenRepositorySpy,
-    sendResetPasswordMessageSpy
+    resetPasswordEmailProviderSpy
   }
 }
 
@@ -94,11 +94,20 @@ describe('DbGeneratePasswordReset UseCase', () => {
     expect(updateResetPasswordTokenRepositorySpy.token).toBe(encrypterSpy.ciphertext)
   })
 
-  test('Should call SendResetPasswordMessage with correct values', async () => {
-    const { sut, loadAccountByEmailRepositorySpy, encrypterSpy, sendResetPasswordMessageSpy } =
+  test('Should call EmailSenderProvider with correct values', async () => {
+    const { sut, loadAccountByEmailRepositorySpy, encrypterSpy, resetPasswordEmailProviderSpy } =
       makeSut()
+
     await sut.generate(mockGeneratePasswordResetParams())
-    expect(sendResetPasswordMessageSpy.userId).toBe(loadAccountByEmailRepositorySpy.result.id)
-    expect(sendResetPasswordMessageSpy.resetToken).toBe(encrypterSpy.plaintext)
+
+    const params = resetPasswordEmailProviderSpy.params
+    const userId = loadAccountByEmailRepositorySpy.result.id
+    const link = `/passwordReset/${userId}/${encrypterSpy.plaintext}`
+
+    expect(params.to).toBe(loadAccountByEmailRepositorySpy.email)
+    expect(params.subject).toBe('Redefinição de Senha')
+    expect(params.template.resetPasswordLink).toContain(link)
+    expect(params.template.userEmail).toBe(loadAccountByEmailRepositorySpy.email)
+    expect(params.template.userName).toBe(loadAccountByEmailRepositorySpy.result.name)
   })
 })

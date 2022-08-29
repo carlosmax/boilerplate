@@ -26,11 +26,16 @@ export class LoadAccountByEmailRepositorySpy implements LoadAccountByEmailReposi
   result = {
     id: faker.datatype.uuid(),
     name: faker.name.findName(),
+    email: null,
     password: faker.internet.password()
   }
 
   async loadByEmail(email: string): Promise<LoadAccountByEmailRepository.Result> {
     this.email = email
+
+    if (this.result) {
+      this.result.email = email
+    }
     return this.result
   }
 }

@@ -1,10 +1,12 @@
-import { SendResetPasswordMessage } from '@/data/protocols'
+import { EmailSenderProvider } from '@/data/protocols'
+import { ResetPasswordEmailTemplate } from '../protocols/messages/email-templates'
 
-export class SendResetPasswordMessageSpy implements SendResetPasswordMessage {
-  userId: string
-  resetToken: string
-  async sendResetPassword(userId: string, resetToken: string): Promise<void> {
-    this.userId = userId
-    this.resetToken = resetToken
+export class ResetPasswordEmailProviderSpy
+  implements EmailSenderProvider<ResetPasswordEmailTemplate>
+{
+  params: EmailSenderProvider.Params<ResetPasswordEmailTemplate>
+
+  async send(params: EmailSenderProvider.Params<ResetPasswordEmailTemplate>): Promise<void> {
+    this.params = params
   }
 }
