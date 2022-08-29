@@ -28,7 +28,7 @@ describe('SqlAccountRepository', () => {
     })
   })
 
-  describe('updateAccessToken()', () => {
+  describe('updateResetPasswordToken()', () => {
     test('Should update the account resetPasswordToken on success', async () => {
       const sut = makeSut()
       const id = faker.datatype.uuid()
@@ -47,6 +47,26 @@ describe('SqlAccountRepository', () => {
       expect(account).toBeTruthy()
       expect(account.resetPasswordToken).toBe(resetPasswordToken)
       expect(account.resetPasswordExpires).toBeTruthy()
+    })
+  })
+
+  describe('updateAccessToken()', () => {
+    test('Should update the account accessToken on success', async () => {
+      const sut = makeSut()
+      const id = faker.datatype.uuid()
+      await accountDb.create({
+        id,
+        name: faker.name.findName(),
+        email: faker.internet.email(),
+        password: faker.random.alphaNumeric(8)
+      })
+      const fakeAccount = await accountDb.findOne({ where: { id } })
+      expect(fakeAccount.token).toBeFalsy()
+      const accessToken = faker.datatype.uuid()
+      await sut.updateAccessToken(fakeAccount.id, accessToken)
+      const account = await accountDb.findOne({ where: { id } })
+      expect(account).toBeTruthy()
+      expect(account.token).toBe(accessToken)
     })
   })
 })
