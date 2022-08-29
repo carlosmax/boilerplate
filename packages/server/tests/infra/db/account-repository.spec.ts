@@ -41,6 +41,25 @@ describe('SqlAccountRepository', () => {
     })
   })
 
+  describe('loadByEmail()', () => {
+    test('Should return an account on success', async () => {
+      const sut = makeSut()
+      const addAccountParams = mockAddAccountParams()
+      await accountDb.create(addAccountParams)
+      const account = await sut.loadByEmail(addAccountParams.email)
+      expect(account).toBeTruthy()
+      expect(account.id).toBeTruthy()
+      expect(account.name).toBe(addAccountParams.name)
+      expect(account.password).toBe(addAccountParams.password)
+    })
+
+    test('Should return null if loadByEmail fails', async () => {
+      const sut = makeSut()
+      const account = await sut.loadByEmail(faker.internet.email())
+      expect(account).toBeFalsy()
+    })
+  })
+
   describe('updateResetPasswordToken()', () => {
     test('Should update the account resetPasswordToken on success', async () => {
       const sut = makeSut()
