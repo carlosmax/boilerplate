@@ -10,6 +10,7 @@ export const mockAddAccount = (): Account => ({
   password: faker.random.alphaNumeric(16),
   phone: null,
   token: null,
+  role: null,
   resetPasswordToken: null,
   resetPasswordExpires: null,
   createdAt: null,
