@@ -1,7 +1,7 @@
-import { AccountDb, AccountDbFactory, SqlAccountRepository } from '@/infra/db'
-import { Database } from '@/main/config/db'
 import { faker } from '@faker-js/faker'
-import { mockAddAccount } from '../../domain/mocks'
+import { Database } from '@/main/config/db'
+import { AccountDb, AccountDbFactory, SqlAccountRepository } from '@/infra/db'
+import { mockAddAccount, mockAddAccountParams } from '@/tests/domain/mocks'
 
 const makeSut = (): SqlAccountRepository => {
   return new SqlAccountRepository()
@@ -26,6 +26,18 @@ describe('SqlAccountRepository', () => {
     await accountDb.destroy({
       where: {},
       truncate: true
+    })
+  })
+
+  describe('add()', () => {
+    test('Should return an account on success', async () => {
+      const sut = makeSut()
+      const addAccountParams = mockAddAccountParams()
+      const savedAccount = await sut.add(addAccountParams)
+      expect(savedAccount).toBeTruthy()
+      expect(savedAccount.id).toBeTruthy()
+      expect(savedAccount.name).toBe(addAccountParams.name)
+      expect(savedAccount.email).toBe(addAccountParams.email)
     })
   })
 
