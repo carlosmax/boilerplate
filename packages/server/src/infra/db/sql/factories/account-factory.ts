@@ -25,6 +25,10 @@ export function AccountDbFactory(): AccountDb {
       type: DataTypes.STRING,
       allowNull: true
     },
+    role: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
     resetPasswordToken: {
       type: DataTypes.STRING,
       allowNull: true

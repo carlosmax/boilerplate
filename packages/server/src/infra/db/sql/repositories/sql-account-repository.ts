@@ -1,3 +1,4 @@
+import { Op } from 'sequelize'
 import {
   LoadAccountByIdRepository,
   LoadAccountByEmailRepository,
@@ -36,7 +37,7 @@ export class SqlAccountRepository
 
   async loadByToken(token: string, role?: string): Promise<LoadAccountByTokenRepository.Result> {
     return await this.accountDb.findOne({
-      where: { token }
+      where: { token, role: { [Op.or]: [role || null, 'admin'] } }
     })
   }
 
