@@ -29,7 +29,15 @@ export class DbGeneratePasswordReset implements GeneratePasswordReset {
     const hash = await this.encrypter.encrypt(resetToken)
 
     await this.updateResetPasswordTokenRepository.updateResetPasswordToken(account.id, hash)
+    await this.sendEmail(account, resetToken)
 
+    return true
+  }
+
+  private async sendEmail(
+    account: LoadAccountByEmailRepository.Result,
+    resetToken: string
+  ): Promise<void> {
     const link = `${env.clientUrl}/passwordReset/${account.id}/${resetToken}`
 
     const template: ResetPasswordEmailTemplate = {
@@ -48,7 +56,5 @@ export class DbGeneratePasswordReset implements GeneratePasswordReset {
       subject: 'Redefinição de Senha',
       template
     })
-
-    return true
   }
 }
