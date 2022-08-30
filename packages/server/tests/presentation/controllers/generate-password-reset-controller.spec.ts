@@ -5,6 +5,7 @@ import { GeneratePasswordReset } from '@/domain/usecases'
 import { noContent, serverError } from '@/presentation/helpers'
 import { ServerError } from '@monorepo/validation'
 import { throwError } from '@/tests/domain/mocks'
+import { ValidationSpy } from '@/tests/presentation/mocks'
 
 const mockRequest = (): GeneratePasswordResetController.Request => {
   return {
@@ -25,14 +26,17 @@ class GeneratePasswordResetSpy implements GeneratePasswordReset {
 type SutTypes = {
   sut: GeneratePasswordResetController
   generatePasswordResetSpy: GeneratePasswordResetSpy
+  validationSpy: ValidationSpy
 }
 
 const makeSut = (): SutTypes => {
   const generatePasswordResetSpy = new GeneratePasswordResetSpy()
-  const sut = new GeneratePasswordResetController(generatePasswordResetSpy)
+  const validationSpy = new ValidationSpy()
+  const sut = new GeneratePasswordResetController(generatePasswordResetSpy, validationSpy)
   return {
     sut,
-    generatePasswordResetSpy
+    generatePasswordResetSpy,
+    validationSpy
   }
 }
 
@@ -57,5 +61,12 @@ describe('GeneratePasswordResetController', () => {
     const { sut } = makeSut()
     const httpResponse = await sut.handle(mockRequest())
     expect(httpResponse).toEqual(noContent())
+  })
+
+  test('Should call Validation with correct value', async () => {
+    const { sut, validationSpy } = makeSut()
+    const request = mockRequest()
+    await sut.handle(request)
+    expect(validationSpy.input).toEqual(request)
   })
 })
