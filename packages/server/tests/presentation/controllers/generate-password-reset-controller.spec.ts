@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker'
 
 import { GeneratePasswordResetController } from '@/presentation/controllers'
 import { GeneratePasswordReset } from '@/domain/usecases'
-import { serverError } from '@/presentation/helpers'
+import { noContent, serverError } from '@/presentation/helpers'
 import { ServerError } from '@monorepo/validation'
 import { throwError } from '@/tests/domain/mocks'
 
@@ -14,10 +14,11 @@ const mockRequest = (): GeneratePasswordResetController.Request => {
 
 class GeneratePasswordResetSpy implements GeneratePasswordReset {
   params: GeneratePasswordReset.Params
+  result = true
 
   async generate(params: GeneratePasswordReset.Params): Promise<boolean> {
     this.params = params
-    return true
+    return this.result
   }
 }
 
@@ -50,5 +51,11 @@ describe('GeneratePasswordResetController', () => {
     jest.spyOn(generatePasswordResetSpy, 'generate').mockImplementationOnce(throwError)
     const httpResponse = await sut.handle(mockRequest())
     expect(httpResponse).toEqual(serverError(new ServerError(null)))
+  })
+
+  test('Should return 200 if valid data is provided', async () => {
+    const { sut } = makeSut()
+    const httpResponse = await sut.handle(mockRequest())
+    expect(httpResponse).toEqual(noContent())
   })
 })
