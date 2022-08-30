@@ -1,6 +1,6 @@
 import { GeneratePasswordReset } from '@/domain/usecases'
 import { Controller, HttpResponse } from '@/presentation/protocols'
-import { serverError } from '@/presentation/helpers'
+import { noContent, serverError } from '@/presentation/helpers'
 
 export class GeneratePasswordResetController implements Controller {
   constructor(private readonly generatePasswordReset: GeneratePasswordReset) {}
@@ -8,7 +8,7 @@ export class GeneratePasswordResetController implements Controller {
   async handle(request: GeneratePasswordResetController.Request): Promise<HttpResponse> {
     try {
       await this.generatePasswordReset.generate(request)
-      return null
+      return noContent()
     } catch (error) {
       return serverError(error)
     }
