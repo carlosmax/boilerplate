@@ -1,6 +1,6 @@
 import { GeneratePasswordReset } from '@/domain/usecases'
 import { Controller, HttpResponse } from '@/presentation/protocols'
-import { noContent, serverError } from '@/presentation/helpers'
+import { badRequest, noContent, serverError } from '@/presentation/helpers'
 import { ValidationInput } from '@monorepo/validation'
 
 export class GeneratePasswordResetController implements Controller {
@@ -11,7 +11,11 @@ export class GeneratePasswordResetController implements Controller {
 
   async handle(request: GeneratePasswordResetController.Request): Promise<HttpResponse> {
     try {
-      this.validation.validateInput(request)
+      const error = this.validation.validateInput(request)
+      if (error) {
+        return badRequest(error)
+      }
+
       await this.generatePasswordReset.generate(request)
       return noContent()
     } catch (error) {
