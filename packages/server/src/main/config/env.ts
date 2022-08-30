@@ -5,5 +5,7 @@ export default {
   brandName: process.env.BRAND_NAME,
   brandPrimaryColor: process.env.BRAND_PRIMARY_COLOR,
   logoUrl: `${process.env.CLIENT_URL}/${process.env.LOGO_URL}`,
-  supportEmail: process.env.SUPPORT_EMAIL
+  supportEmail: process.env.SUPPORT_EMAIL,
+  senderEmail: process.env.SENDER_EMAIL,
+  sendGridKey: process.env.SENDGRID_KEY
 }
