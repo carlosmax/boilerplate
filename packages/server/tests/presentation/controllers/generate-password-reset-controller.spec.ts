@@ -2,8 +2,8 @@ import { faker } from '@faker-js/faker'
 
 import { GeneratePasswordResetController } from '@/presentation/controllers'
 import { GeneratePasswordReset } from '@/domain/usecases'
-import { noContent, serverError } from '@/presentation/helpers'
-import { ServerError } from '@monorepo/validation'
+import { badRequest, noContent, serverError } from '@/presentation/helpers'
+import { MissingParamError, ServerError } from '@monorepo/validation'
 import { throwError } from '@/tests/domain/mocks'
 import { ValidationSpy } from '@/tests/presentation/mocks'
 
@@ -68,5 +68,12 @@ describe('GeneratePasswordResetController', () => {
     const request = mockRequest()
     await sut.handle(request)
     expect(validationSpy.input).toEqual(request)
+  })
+
+  test('Should return 400 if Validation returns an error', async () => {
+    const { sut, validationSpy } = makeSut()
+    validationSpy.error = new MissingParamError(faker.random.word())
+    const httpResponse = await sut.handle(mockRequest())
+    expect(httpResponse).toEqual(badRequest(validationSpy.error))
   })
 })
