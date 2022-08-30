@@ -2,6 +2,9 @@ import { faker } from '@faker-js/faker'
 
 import { GeneratePasswordResetController } from '@/presentation/controllers'
 import { GeneratePasswordReset } from '@/domain/usecases'
+import { serverError } from '@/presentation/helpers'
+import { ServerError } from '@monorepo/validation'
+import { throwError } from '@/tests/domain/mocks'
 
 const mockRequest = (): GeneratePasswordResetController.Request => {
   return {
@@ -40,5 +43,12 @@ describe('GeneratePasswordResetController', () => {
     expect(generatePasswordResetSpy.params).toEqual({
       email: request.email
     })
+  })
+
+  test('Should return 500 if GeneratePasswordReset throws', async () => {
+    const { sut, generatePasswordResetSpy } = makeSut()
+    jest.spyOn(generatePasswordResetSpy, 'generate').mockImplementationOnce(throwError)
+    const httpResponse = await sut.handle(mockRequest())
+    expect(httpResponse).toEqual(serverError(new ServerError(null)))
   })
 })
