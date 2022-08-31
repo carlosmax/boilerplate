@@ -78,8 +78,8 @@ const Login: React.FC<Props> = ({ validation, authentication }) => {
               <Card className='mt-4'>
                 <CardBody className='p-4'>
                   <div className='text-center mt-2'>
-                    <h5 className='text-primary'>Welcome Back !</h5>
-                    <p className='text-muted'>Sign in to continue to Velzon.</p>
+                    <h5 className='text-primary'>Bem vindo de volta!</h5>
+                    <p className='text-muted'>Faça login para continuar.</p>
                   </div>
                   {state.mainError ? (
                     <Alert data-testid='form-error' color='danger'>
@@ -99,9 +99,6 @@ const Login: React.FC<Props> = ({ validation, authentication }) => {
                         ></CustomInput>
                       </div>
                       <div className='mb-3'>
-                        <Label className='form-label' htmlFor='password-input'>
-                          Password
-                        </Label>
                         <div className='position-relative auth-pass-inputgroup mb-3'>
                           <CustomInput
                             name='password'

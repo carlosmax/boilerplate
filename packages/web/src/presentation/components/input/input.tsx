@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { FormFeedback, Input } from 'reactstrap'
+import { FormFeedback, Input, Label } from 'reactstrap'
 import { InputType } from 'reactstrap/types/lib/Input'
 
 type Props = React.DetailedHTMLProps<
@@ -7,7 +7,7 @@ type Props = React.DetailedHTMLProps<
   HTMLInputElement
 > & {
   type: InputType
-  label: string
+  label?: string
   state: any
   setState: any
 }
@@ -26,6 +26,13 @@ const CustomInput: React.FC<Props> = ({ state, setState, ...props }: Props) => {
 
   return (
     <>
+      {props.label ? (
+        <Label className='form-label' htmlFor={props.name}>
+          {props.label}
+        </Label>
+      ) : (
+        <></>
+      )}
       <Input
         data-testid={props.name}
         name={props.name}
