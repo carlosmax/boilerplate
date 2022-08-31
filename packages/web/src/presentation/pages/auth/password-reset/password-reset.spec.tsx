@@ -130,7 +130,7 @@ describe('PasswordReset Component', () => {
     expect(resetPasswordSpy.params).toEqual({
       accountId: urlParams.accountId,
       resetToken: urlParams.resetToken,
-      password
+      newPassword: password
     })
   })
 

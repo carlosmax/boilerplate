@@ -45,7 +45,7 @@ const PasswordReset: React.FC<Props> = ({ validation, resetPassword }) => {
       await resetPassword.reset({
         accountId,
         resetToken,
-        password: state.password
+        newPassword: state.password
       })
       navigate('/login')
     } catch (error) {

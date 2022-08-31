@@ -14,7 +14,7 @@ export class RemoteResetPassword implements ResetPassword {
       body: {
         accountId: params.accountId,
         resetToken: params.resetToken,
-        newPassword: params.password
+        newPassword: params.newPassword
       }
     })
 
