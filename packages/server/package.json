@@ -5,14 +5,15 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon -r dotenv/config -L --watch ./dist --inspect=0.0.0.0:9222 --nolazy ./dist/main/server.js",
-    "start": "npm run build && node -r dotenv/config dist/main/server.js",
+    "start": "yarn build && node -r dotenv/config dist/main/server.js",
     "clean": "rimraf dist",
-    "build": "npm run clean && tsc -p tsconfig-build.json",
-    "build:watch": "npm run clean && tsc -p tsconfig-build.json -w",
+    "build": "yarn clean && tsc -p tsconfig-build.json && yarn copy:handlebars",
+    "build:watch": "yarn clean && tsc -p tsconfig-build.json -w",
     "createdb": "npx sequelize-cli db:create",
     "migratedb": "npx sequelize-cli db:migrate",
     "seeddb": "npx sequelize-cli db:seed:all",
-    "check": "npm-check -s -u"
+    "check": "npm-check -s -u",
+    "copy:handlebars": "cp -rv src/infra/messages/templates dist/infra/messages/templates"
   },
   "keywords": [],
   "author": "",
