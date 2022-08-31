@@ -14,11 +14,11 @@ export class SendGridAdapter<T> implements EmailSenderProvider<T> {
     if (!sendGridKey || !appEmail) {
       throw new Error(`The SendGrid settings are required to send e-mails!`)
     }
+
+    sendGridEmail.setApiKey(this.sendGridKey)
   }
 
   async send(params: EmailSenderProvider.Params<T>): Promise<void> {
-    sendGridEmail.setApiKey(this.sendGridKey)
-
     const msg = {
       to: params.to,
       from: this.appEmail,
@@ -39,7 +39,7 @@ export class SendGridAdapter<T> implements EmailSenderProvider<T> {
   private getTemplateName(): string {
     switch (this.messageTemplateType) {
       case MessageTemplateType.RESET_PASSWORD:
-        return './request-reset-password.handlebars'
+        return './templates/request-reset-password.handlebars'
     }
 
     return null
