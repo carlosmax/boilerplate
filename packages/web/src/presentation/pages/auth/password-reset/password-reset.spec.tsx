@@ -17,7 +17,25 @@ type SutParams = {
   validationError: string
 }
 
-const history = createMemoryHistory({ initialEntries: ['/password-reset'] })
+const urlParams = {
+  accountId: faker.datatype.uuid(),
+  resetToken: faker.random.alphaNumeric(32)
+}
+
+const initialUrl = `/password-reset/${urlParams.accountId}/${urlParams.resetToken}`
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'), // use actual for all non-hook parts
+  useParams: () => ({
+    accountId: urlParams.accountId,
+    resetToken: urlParams.resetToken
+  }),
+  useRouteMatch: () => ({ url: initialUrl })
+}))
+
+const history = createMemoryHistory({
+  initialEntries: [initialUrl]
+})
 
 const makeSut = (params?: SutParams): SutTypes => {
   const resetPasswordSpy = new ResetPasswordSpy()
@@ -103,7 +121,20 @@ describe('PasswordReset Component', () => {
     expect(resetPasswordSpy.callsCount).toBe(0)
   })
 
-  test('Should present error if AddAccount fails', async () => {
+  test('Should call ResetPassword with correct values', async () => {
+    const { resetPasswordSpy } = makeSut()
+    const password = faker.internet.password()
+
+    await simulateValidSubmit(password)
+
+    expect(resetPasswordSpy.params).toEqual({
+      accountId: urlParams.accountId,
+      resetToken: urlParams.resetToken,
+      password
+    })
+  })
+
+  test('Should present error if ResetPassword fails', async () => {
     const { resetPasswordSpy } = makeSut()
     const error = new UnexpectedError()
 
