@@ -4,6 +4,8 @@ export interface ResetPassword {
 
 export namespace ResetPassword {
   export type Params = {
+    accountId: string
+    resetToken: string
     password: string
   }
 }

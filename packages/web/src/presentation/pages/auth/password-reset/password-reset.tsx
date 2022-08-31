@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useRecoilState, useResetRecoilState } from 'recoil'
 import { Alert, Button, Card, CardBody, Col, Container, Form, Label, Row } from 'reactstrap'
 import { CustomInput } from '@/presentation/components'
@@ -16,6 +16,7 @@ type Props = {
 
 const PasswordReset: React.FC<Props> = ({ validation, resetPassword }) => {
   const navigate = useNavigate()
+  const { accountId, resetToken } = useParams()
   const resetFormState = useResetRecoilState(passwordResetState)
   const [state, setState] = useRecoilState(passwordResetState)
 
@@ -41,7 +42,11 @@ const PasswordReset: React.FC<Props> = ({ validation, resetPassword }) => {
         return
       }
 
-      await resetPassword.reset({ password: state.password })
+      await resetPassword.reset({
+        accountId,
+        resetToken,
+        password: state.password
+      })
       navigate('/login')
     } catch (error) {
       setState((old: any) => ({
