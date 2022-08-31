@@ -67,8 +67,8 @@ const ForgetPassword: React.FC<Props> = ({ validation, requestResetPassword }) =
             <Card className='mt-4'>
               <CardBody className='p-4'>
                 <div className='text-center mt-2'>
-                  <h5 className='text-primary'>Forgot Password?</h5>
-                  <p className='text-muted'>Reset password with velzon</p>
+                  <h5 className='text-primary'>Esqueceu a senha?</h5>
+                  <p className='text-muted'>Redefinição de senha</p>
                   <div className='avatar-lg mx-auto mt-2 mb-2'>
                     <div className='avatar-title bg-light text-success display-3 rounded-circle'>
                       <i className='ri-mail-send-fill'></i>
@@ -80,7 +80,7 @@ const ForgetPassword: React.FC<Props> = ({ validation, requestResetPassword }) =
                   className='alert-borderless alert-warning text-center mb-2 mx-2'
                   role='alert'
                 >
-                  Enter your email and instructions will be sent to you!
+                  Enviaremos para o seu e-mail as instruções para redefinição de senha!
                 </Alert>
                 <div className='p-2'>
                   {state.mainError ? (
@@ -92,9 +92,9 @@ const ForgetPassword: React.FC<Props> = ({ validation, requestResetPassword }) =
                     <div className='mb-4'>
                       <CustomInput
                         name='email'
-                        label='Email'
+                        label='E-mail'
                         type='email'
-                        placeholder='Enter email'
+                        placeholder='Digite seu e-mail'
                         state={state}
                         setState={setState}
                       />
@@ -107,7 +107,7 @@ const ForgetPassword: React.FC<Props> = ({ validation, requestResetPassword }) =
                         type='submit'
                         disabled={state.isFormInvalid}
                       >
-                        Send Reset Link
+                        Enviar
                       </button>
                     </div>
                   </Form>
@@ -117,14 +117,14 @@ const ForgetPassword: React.FC<Props> = ({ validation, requestResetPassword }) =
 
             <div className='mt-4 text-center'>
               <p className='mb-0'>
-                Wait, I remember my password...{' '}
+                Espere, eu me lembro da minha senha...{' '}
                 <Link
                   data-testid='login-link'
                   to='/login'
                   className='fw-semibold text-primary text-decoration-underline'
                 >
                   {' '}
-                  Click here{' '}
+                  Entrar{' '}
                 </Link>{' '}
               </p>
             </div>
