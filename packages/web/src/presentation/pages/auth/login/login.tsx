@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
-import { Alert, Button, Card, CardBody, Col, Container, Form, Input, Label, Row } from 'reactstrap'
+import { Alert, Button, Card, CardBody, Col, Container, Form, Label, Row } from 'reactstrap'
 import { currentAccountState, CustomInput } from '@/presentation/components'
 import { Validation } from '@monorepo/validation'
 import { Authentication } from '@/domain/usecases'
@@ -91,20 +91,22 @@ const Login: React.FC<Props> = ({ validation, authentication }) => {
                       <div className='mb-3'>
                         <CustomInput
                           name='email'
-                          label='Email'
+                          label='E-mail'
                           type='email'
-                          placeholder='Type Your Email Address'
+                          placeholder='Digite seu e-mail'
                           state={state}
                           setState={setState}
                         ></CustomInput>
                       </div>
                       <div className='mb-3'>
+                        <Label className='form-label' htmlFor='password'>
+                          Senha
+                        </Label>
                         <div className='position-relative auth-pass-inputgroup mb-3'>
                           <CustomInput
                             name='password'
-                            label='Password'
                             type={state.showPassword ? 'text' : 'password'}
-                            placeholder='Type Your Password'
+                            placeholder='Digite sua senha'
                             state={state}
                             setState={setState}
                           ></CustomInput>
@@ -127,18 +129,9 @@ const Login: React.FC<Props> = ({ validation, authentication }) => {
                             to='/forgot-password'
                             className='text-muted'
                           >
-                            Forgot password?
+                            Esqueceu a senha?
                           </Link>
                         </div>
-                        <Input
-                          className='form-check-input'
-                          type='checkbox'
-                          value=''
-                          id='remember'
-                        />
-                        <Label className='form-check-label' htmlFor='auth-remember-check'>
-                          Remember me
-                        </Label>
                       </div>
                       <div className='mt-4'>
                         <Button
@@ -148,7 +141,7 @@ const Login: React.FC<Props> = ({ validation, authentication }) => {
                           type='submit'
                           disabled={state.isFormInvalid}
                         >
-                          Sign In
+                          Entrar
                         </Button>
                       </div>
                     </Form>

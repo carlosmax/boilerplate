@@ -5,13 +5,13 @@ const LoginLink: React.FC = () => {
   return (
     <div className='mt-4 text-center'>
       <p className='mb-0'>
-        Already have an account?{' '}
+        Já possui uma conta?{' '}
         <Link
           data-testid='login-link'
           to='/login'
           className='fw-semibold text-primary text-decoration-underline'
         >
-          Sign in
+          Entrar
         </Link>
       </p>
     </div>

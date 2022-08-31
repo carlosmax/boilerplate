@@ -88,7 +88,6 @@ const Signup: React.FC<Props> = ({ validation, addAccount }) => {
                   <img src={logoDark} alt='' height='20' />
                 </Link>
               </div>
-              <p className='mt-3 fs-15 fw-medium'>{`Premium Admin & Dashboard Template`}</p>
             </div>
           </Col>
         </Row>
@@ -98,8 +97,8 @@ const Signup: React.FC<Props> = ({ validation, addAccount }) => {
             <Card className='mt-4'>
               <CardBody className='p-4'>
                 <div className='text-center mt-2'>
-                  <h5 className='text-primary'>Create New Account</h5>
-                  <p className='text-muted'>Get your free velzon account now</p>
+                  <h5 className='text-primary'>Criar nova conta</h5>
+                  <p className='text-muted'>Obtenha sua conta gratuita agora</p>
                 </div>
                 <div className='p-2 mt-4'>
                   <Form
@@ -110,7 +109,7 @@ const Signup: React.FC<Props> = ({ validation, addAccount }) => {
                   >
                     {success && success ? (
                       <>
-                        {toast('Your Been Redirect To Login Page...', {
+                        {toast('Você está sendo redirecionado para a página de login...', {
                           position: 'top-right',
                           hideProgressBar: false,
                           className: 'bg-success text-white',
@@ -119,7 +118,7 @@ const Signup: React.FC<Props> = ({ validation, addAccount }) => {
                         })}
                         <ToastContainer autoClose={2000} limit={1} />
                         <Alert color='success'>
-                          {`Register User Successfully and You'll Be Redirect To Login Page...`}
+                          {`Cadastro realizado com sucesso! Você será redirecionado para a página de login...`}
                         </Alert>
                       </>
                     ) : null}
@@ -132,9 +131,9 @@ const Signup: React.FC<Props> = ({ validation, addAccount }) => {
                     <div className='mb-3'>
                       <CustomInput
                         name='name'
-                        label='Name'
+                        label='Nome'
                         type='text'
-                        placeholder='Name'
+                        placeholder='Digite seu nome'
                         state={state}
                         setState={setState}
                       ></CustomInput>
@@ -142,9 +141,9 @@ const Signup: React.FC<Props> = ({ validation, addAccount }) => {
                     <div className='mb-3'>
                       <CustomInput
                         name='email'
-                        label='Email'
+                        label='E-mail'
                         type='email'
-                        placeholder='Email'
+                        placeholder='Digite seu e-mail'
                         state={state}
                         setState={setState}
                       ></CustomInput>
@@ -152,9 +151,9 @@ const Signup: React.FC<Props> = ({ validation, addAccount }) => {
                     <div className='mb-3'>
                       <CustomInput
                         name='password'
-                        label='Password'
+                        label='Senha'
                         type='password'
-                        placeholder='Password'
+                        placeholder='Digite sua senha'
                         state={state}
                         setState={setState}
                       ></CustomInput>
@@ -162,21 +161,21 @@ const Signup: React.FC<Props> = ({ validation, addAccount }) => {
                     <div className='mb-3'>
                       <CustomInput
                         name='passwordConfirmation'
-                        label='Password Confirmation'
+                        label='Confirmação de Senha'
                         type='password'
-                        placeholder='Password Confirmation'
+                        placeholder='Digite sua senha novamente'
                         state={state}
                         setState={setState}
                       ></CustomInput>
                     </div>
                     <div className='mb-4'>
                       <p className='mb-0 fs-12 text-muted fst-italic'>
-                        By registering you agree to the Velzon{' '}
+                        Ao se registrar, você concorda com o{' '}
                         <Link
                           to='#'
                           className='text-primary text-decoration-underline fst-normal fw-medium'
                         >
-                          Terms of Use
+                          Termos de Uso
                         </Link>
                       </p>
                     </div>
@@ -187,7 +186,7 @@ const Signup: React.FC<Props> = ({ validation, addAccount }) => {
                         className='btn btn-success w-100'
                         disabled={state.isFormInvalid}
                       >
-                        Sign me up
+                        Cadastrar
                       </button>
                     </div>
                   </Form>

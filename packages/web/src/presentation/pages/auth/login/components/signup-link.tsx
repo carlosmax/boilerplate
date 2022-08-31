@@ -5,14 +5,13 @@ const SignupLink: React.FC = () => {
   return (
     <div className='mt-4 text-center'>
       <p className='mb-0'>
-        {"Don't have an account?"}{' '}
+        {'Ainda não tem uma conta?'}{' '}
         <Link
           data-testid='signup-link'
           to='/signup'
           className='fw-semibold text-primary text-decoration-underline'
         >
-          {' '}
-          Sign up{' '}
+          {' Cadastre-se '}
         </Link>{' '}
       </p>
     </div>
