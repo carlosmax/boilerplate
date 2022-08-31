@@ -11,6 +11,7 @@ type SutTypes = {
 
 const makeSut = (url: string = 'any_url'): SutTypes => {
   const httpPostClientSpy = new HttpPostClientSpy<any, void>()
+  httpPostClientSpy.response.statusCode = HttpStatusCode.noContent
   const sut = new RemoteRequestResetPassword(url, httpPostClientSpy)
 
   return {

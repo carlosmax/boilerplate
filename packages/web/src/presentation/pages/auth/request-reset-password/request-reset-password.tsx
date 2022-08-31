@@ -18,7 +18,6 @@ const RequestResetPassword: React.FC = () => {
                     <img src={logoDark} alt='' height='20' />
                   </Link>
                 </div>
-                <p className='mt-3 fs-15 fw-medium'>Premium Admin & Dashboard Template</p>
               </div>
             </Col>
           </Row>
@@ -33,13 +32,14 @@ const RequestResetPassword: React.FC = () => {
                     </div>
                   </div>
                   <div className='mt-4 pt-2'>
-                    <h4>Well done !</h4>
+                    <h4>Redefinição de Senha</h4>
                     <p className='text-muted mx-4'>
-                      Aww yeah, you successfully read this important message.
+                      Se encontrarmos uma conta associada a esse e-mail, enviaremos instruções de
+                      redefinição de senha para o endereço de e-mail principal da conta.
                     </p>
                     <div className='mt-4'>
-                      <Link to='/auth-signin-basic' className='btn btn-success w-100'>
-                        Back to Dashboard
+                      <Link to='/login' className='btn btn-success w-100'>
+                        Voltar para o Login
                       </Link>
                     </div>
                   </div>

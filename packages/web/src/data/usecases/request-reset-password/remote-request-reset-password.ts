@@ -15,8 +15,8 @@ export class RemoteRequestResetPassword implements RequestResetPassword {
     })
 
     switch (response.statusCode) {
-      case HttpStatusCode.ok:
-        return response.body
+      case HttpStatusCode.noContent:
+        return
       default:
         throw new UnexpectedError()
     }
