@@ -4,7 +4,13 @@ import { RecoilRoot } from 'recoil'
 import { setCurrentAccountAdapter, getCurrentAccountAdapter } from '@/main/adapters'
 import { currentAccountState } from '@/presentation/components'
 import { Landing, NotFound, RequestResetPassword } from '@/presentation/pages'
-import { makeDashboard, makeForgetPassword, makeLogin, makeSignup } from './factories'
+import {
+  makeDashboard,
+  makeForgetPassword,
+  makePasswordReset,
+  makeLogin,
+  makeSignup
+} from './factories'
 
 const Router: React.FC = () => {
   const state = {
@@ -19,6 +25,7 @@ const Router: React.FC = () => {
           <Route path='/login' element={makeLogin()} />
           <Route path='/signup' element={makeSignup()} />
           <Route path='/forgot-password' element={makeForgetPassword()} />
+          <Route path='/password-reset' element={makePasswordReset()} />
           <Route path='/request-reset-password' element={<RequestResetPassword />} />
           <Route path='/dashboard' element={makeDashboard()} />
           <Route path='/' element={<Landing />} />
