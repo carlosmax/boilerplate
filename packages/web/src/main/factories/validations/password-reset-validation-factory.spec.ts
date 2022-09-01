@@ -6,7 +6,10 @@ describe('PasswordResetValidationFactory', () => {
     const composite = makePasswordResetValidation()
 
     expect(composite).toEqual(
-      ValidationComposite.build([...ValidationBuilder.field('password').required().min(5).build()])
+      ValidationComposite.build([
+        ...ValidationBuilder.field('password').required().min(5).build(),
+        ...ValidationBuilder.field('passwordConfirmation').required().sameAs('password').build()
+      ])
     )
   })
 })
