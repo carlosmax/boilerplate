@@ -3,6 +3,7 @@ import { faker } from '@faker-js/faker'
 import { DbPasswordReset } from '@/data/usecases'
 import { PasswordReset } from '@/domain/usecases'
 import { LoadAccountByIdRepositorySpy } from '../mocks'
+import { throwError } from '../../domain/mocks'
 
 type SutTypes = {
   sut: DbPasswordReset
@@ -32,5 +33,12 @@ describe('DbPasswordReset UseCase', () => {
     const params = mockPasswordResetParams()
     await sut.reset(params)
     expect(loadAccountByIdRepositorySpy.accountId).toBe(params.accountId)
+  })
+
+  test('Should throw if LoadAccountByEmailRepository throws', async () => {
+    const { sut, loadAccountByIdRepositorySpy } = makeSut()
+    jest.spyOn(loadAccountByIdRepositorySpy, 'loadById').mockImplementationOnce(throwError)
+    const promise = sut.reset(mockPasswordResetParams())
+    await expect(promise).rejects.toThrow()
   })
 })
