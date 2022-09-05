@@ -7,9 +7,9 @@ import { Landing, NotFound, RequestResetPassword } from '@/presentation/pages'
 import {
   makeDashboard,
   makeForgetPassword,
-  makePasswordReset,
   makeLogin,
-  makeSignup
+  makeSignup,
+  PasswordResetWrapper
 } from './factories'
 
 const Router: React.FC = () => {
@@ -22,13 +22,16 @@ const Router: React.FC = () => {
     <RecoilRoot initializeState={({ set }) => set(currentAccountState, state)}>
       <BrowserRouter>
         <Routes>
+          <Route path='/' element={<Landing />} />
           <Route path='/login' element={makeLogin()} />
           <Route path='/signup' element={makeSignup()} />
           <Route path='/forgot-password' element={makeForgetPassword()} />
-          <Route path='/password-reset' element={makePasswordReset()} />
+          <Route
+            path='/password-reset/:accountId/:resetToken'
+            element={<PasswordResetWrapper />}
+          ></Route>
           <Route path='/request-reset-password' element={<RequestResetPassword />} />
           <Route path='/dashboard' element={makeDashboard()} />
-          <Route path='/' element={<Landing />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
       </BrowserRouter>

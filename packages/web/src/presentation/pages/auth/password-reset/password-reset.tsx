@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useRecoilState, useResetRecoilState } from 'recoil'
 import { Alert, Button, Card, CardBody, Col, Container, Form, Label, Row } from 'reactstrap'
 import { CustomInput } from '@/presentation/components'
@@ -12,11 +12,12 @@ import { ResetPassword } from '@/domain/usecases'
 type Props = {
   validation: Validation
   resetPassword: ResetPassword
+  params: any
 }
 
-const PasswordReset: React.FC<Props> = ({ validation, resetPassword }) => {
+const PasswordReset: React.FC<Props> = ({ validation, resetPassword, params }) => {
   const navigate = useNavigate()
-  const { accountId, resetToken } = useParams()
+  // const { accountId, resetToken } = useParams()
   const resetFormState = useResetRecoilState(passwordResetState)
   const [state, setState] = useRecoilState(passwordResetState)
 
@@ -43,8 +44,8 @@ const PasswordReset: React.FC<Props> = ({ validation, resetPassword }) => {
       }
 
       await resetPassword.reset({
-        accountId,
-        resetToken,
+        accountId: params.accountId,
+        resetToken: params.resetToken,
         newPassword: state.password
       })
       navigate('/login')
@@ -162,7 +163,7 @@ const PasswordReset: React.FC<Props> = ({ validation, resetPassword }) => {
                           type='submit'
                           disabled={state.isFormInvalid}
                         >
-                          Entrar
+                          Alterar a Senha
                         </Button>
                       </div>
                     </Form>
