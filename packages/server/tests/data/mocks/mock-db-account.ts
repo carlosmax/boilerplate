@@ -4,7 +4,8 @@ import {
   LoadAccountByTokenRepository,
   UpdateAccessTokenRepository,
   CheckAccountByEmailRepository,
-  UpdateResetPasswordTokenRepository
+  UpdateResetPasswordTokenRepository,
+  LoadAccountByIdRepository
 } from '@/data/protocols'
 import { Account } from '@/domain/models'
 
@@ -36,6 +37,23 @@ export class LoadAccountByEmailRepositorySpy implements LoadAccountByEmailReposi
     if (this.result) {
       this.result.email = email
     }
+    return this.result
+  }
+}
+
+export class LoadAccountByIdRepositorySpy implements LoadAccountByIdRepository {
+  accountId: string
+
+  result = {
+    id: faker.datatype.uuid(),
+    name: faker.name.findName(),
+    email: null,
+    phone: null,
+    password: faker.internet.password()
+  }
+
+  async loadById(accountId: string): Promise<LoadAccountByIdRepository.Result> {
+    this.accountId = accountId
     return this.result
   }
 }
