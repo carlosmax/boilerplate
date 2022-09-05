@@ -5,7 +5,7 @@ const webpackPreprocessor = require('@cypress/webpack-preprocessor')
 
 export default defineConfig({
   e2e: {
-    baseUrl: 'http://localhost:8080',
+    baseUrl: 'http://localhost:3000',
     fixturesFolder: './cypress/fixtures',
     supportFile: './cypress/support/index.js',
     video: false,
