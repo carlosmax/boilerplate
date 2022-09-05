@@ -9,15 +9,19 @@ import { passwordResetState } from './components'
 import logoDark from '@/presentation/assets/images/logo-dark.png'
 import { ResetPassword } from '@/domain/usecases'
 
+type Params = {
+  accountId: string
+  resetToken: string
+}
+
 type Props = {
   validation: Validation
   resetPassword: ResetPassword
-  params: any
+  params: Params
 }
 
 const PasswordReset: React.FC<Props> = ({ validation, resetPassword, params }) => {
   const navigate = useNavigate()
-  // const { accountId, resetToken } = useParams()
   const resetFormState = useResetRecoilState(passwordResetState)
   const [state, setState] = useRecoilState(passwordResetState)
 
