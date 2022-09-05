@@ -35,10 +35,17 @@ describe('DbPasswordReset UseCase', () => {
     expect(loadAccountByIdRepositorySpy.accountId).toBe(params.accountId)
   })
 
-  test('Should throw if LoadAccountByEmailRepository throws', async () => {
+  test('Should throw if LoadAccountByIdRepository throws', async () => {
     const { sut, loadAccountByIdRepositorySpy } = makeSut()
     jest.spyOn(loadAccountByIdRepositorySpy, 'loadById').mockImplementationOnce(throwError)
     const promise = sut.reset(mockPasswordResetParams())
     await expect(promise).rejects.toThrow()
+  })
+
+  test('Should return false if LoadAccountByIdRepository returns null', async () => {
+    const { sut, loadAccountByIdRepositorySpy } = makeSut()
+    loadAccountByIdRepositorySpy.result = null
+    const result = await sut.reset(mockPasswordResetParams())
+    expect(result).toBe(false)
   })
 })
