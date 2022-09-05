@@ -24,15 +24,6 @@ const urlParams = {
 
 const initialUrl = `/password-reset/${urlParams.accountId}/${urlParams.resetToken}`
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'), // use actual for all non-hook parts
-  useParams: () => ({
-    accountId: urlParams.accountId,
-    resetToken: urlParams.resetToken
-  }),
-  useRouteMatch: () => ({ url: initialUrl })
-}))
-
 const history = createMemoryHistory({
   initialEntries: [initialUrl]
 })
@@ -43,7 +34,12 @@ const makeSut = (params?: SutParams): SutTypes => {
   validationSpy.errorMessage = params?.validationError
   renderWithHistory({
     history,
-    Page: () => PasswordReset({ validation: validationSpy, resetPassword: resetPasswordSpy })
+    Page: () =>
+      PasswordReset({
+        validation: validationSpy,
+        resetPassword: resetPasswordSpy,
+        params: { accountId: urlParams.accountId, resetToken: urlParams.resetToken }
+      })
   })
   return {
     validationSpy,
