@@ -5,7 +5,12 @@ export class DbPasswordReset implements PasswordReset {
   constructor(private readonly loadAccountByIdRepository: LoadAccountByIdRepository) {}
 
   async reset(params: PasswordReset.Params): Promise<boolean> {
-    await this.loadAccountByIdRepository.loadById(params.accountId)
+    const account = await this.loadAccountByIdRepository.loadById(params.accountId)
+
+    if (!account) {
+      return false
+    }
+
     return true
   }
 }
