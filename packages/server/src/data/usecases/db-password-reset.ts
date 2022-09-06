@@ -19,7 +19,11 @@ export class DbPasswordReset implements PasswordReset {
       throw new Error('Token de redefinição de senha inválido ou expirado!')
     }
 
-    await this.hashComparer.compare(params.resetToken, account.resetPasswordToken)
+    const isValid = await this.hashComparer.compare(params.resetToken, account.resetPasswordToken)
+
+    if (!isValid) {
+      throw new Error('Token de redefinição de senha inválido ou expirado!')
+    }
 
     return true
   }
