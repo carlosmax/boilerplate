@@ -199,4 +199,27 @@ describe('SqlAccountRepository', () => {
       expect(account.token).toBe(accessToken)
     })
   })
+
+  describe('updatePassword()', () => {
+    test('Should update the account password on success', async () => {
+      const sut = makeSut()
+      const mockAccount = mockAddAccount()
+      const oldPassword = mockAccount.password
+      mockAccount.resetPasswordToken = faker.datatype.uuid()
+      mockAccount.resetPasswordExpires = new Date()
+      await accountDb.create(mockAccount)
+      const fakeAccount = await accountDb.findOne({ where: { id: mockAccount.id } })
+
+      expect(fakeAccount.password).toBe(oldPassword)
+
+      const password = faker.random.alphaNumeric(8)
+      await sut.updatePassword(fakeAccount.id, password)
+      const account = await accountDb.findOne({ where: { id: mockAccount.id } })
+
+      expect(account).toBeTruthy()
+      expect(account.password).not.toBe(oldPassword)
+      expect(account.resetPasswordToken).toBeFalsy()
+      expect(account.resetPasswordExpires).toBeFalsy()
+    })
+  })
 })

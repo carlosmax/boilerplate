@@ -1,4 +1,9 @@
 import { Op } from 'sequelize'
+import { addHours } from '@/infra/helpers'
+import { AddAccount } from '@/domain/usecases'
+import { AccountDbFactory } from '../factories'
+import { AccountDb, AccountModel } from '../models'
+
 import {
   LoadAccountByIdRepository,
   LoadAccountByEmailRepository,
@@ -6,12 +11,9 @@ import {
   UpdateAccessTokenRepository,
   AddAccountRepository,
   CheckAccountByEmailRepository,
-  UpdateResetPasswordTokenRepository
+  UpdateResetPasswordTokenRepository,
+  UpdatePasswordRepository
 } from '@/data/protocols'
-import { addHours } from '@/infra/helpers'
-import { AddAccount } from '@/domain/usecases'
-import { AccountDbFactory } from '../factories'
-import { AccountDb, AccountModel } from '../models'
 
 export class SqlAccountRepository
   implements
@@ -21,7 +23,8 @@ export class SqlAccountRepository
     UpdateAccessTokenRepository,
     UpdateResetPasswordTokenRepository,
     AddAccountRepository,
-    CheckAccountByEmailRepository
+    CheckAccountByEmailRepository,
+    UpdatePasswordRepository
 {
   private readonly accountDb: AccountDb
 
@@ -61,5 +64,12 @@ export class SqlAccountRepository
   async updateResetPasswordToken(id: string, resetPasswordToken: string): Promise<void> {
     const resetPasswordExpires = addHours(new Date(), 1)
     await this.accountDb.update({ resetPasswordToken, resetPasswordExpires }, { where: { id } })
+  }
+
+  async updatePassword(id: string, password: string): Promise<void> {
+    await this.accountDb.update(
+      { password, resetPasswordToken: null, resetPasswordExpires: null },
+      { where: { id } }
+    )
   }
 }
