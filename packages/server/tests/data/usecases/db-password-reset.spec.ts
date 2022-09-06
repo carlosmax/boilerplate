@@ -48,4 +48,11 @@ describe('DbPasswordReset UseCase', () => {
     const result = await sut.reset(mockPasswordResetParams())
     expect(result).toBe(false)
   })
+
+  test('Should throw if resetPasswordToken is null', async () => {
+    const { sut, loadAccountByIdRepositorySpy } = makeSut()
+    loadAccountByIdRepositorySpy.result.resetPasswordToken = null
+    const promise = sut.reset(mockPasswordResetParams())
+    await expect(promise).rejects.toThrow('Token de redefinição de senha inválido ou expirado!')
+  })
 })

@@ -8,6 +8,7 @@ import {
   LoadAccountByIdRepository
 } from '@/data/protocols'
 import { Account } from '@/domain/models'
+import { addHours } from '@/infra/helpers'
 
 import { faker } from '@faker-js/faker'
 import { mockAddAccount } from '../../domain/mocks'
@@ -49,7 +50,9 @@ export class LoadAccountByIdRepositorySpy implements LoadAccountByIdRepository {
     name: faker.name.findName(),
     email: null,
     phone: null,
-    password: faker.internet.password()
+    password: faker.internet.password(),
+    resetPasswordToken: faker.datatype.uuid(),
+    resetPasswordExpires: addHours(new Date(), 1)
   }
 
   async loadById(accountId: string): Promise<LoadAccountByIdRepository.Result> {
