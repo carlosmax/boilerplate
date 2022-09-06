@@ -2,24 +2,24 @@ import { faker } from '@faker-js/faker'
 
 import { DbPasswordReset } from '@/data/usecases'
 import { PasswordReset } from '@/domain/usecases'
-import { EncrypterSpy, LoadAccountByIdRepositorySpy } from '../mocks'
+import { HashComparerSpy, LoadAccountByIdRepositorySpy } from '../mocks'
 import { throwError } from '../../domain/mocks'
 import { addHours } from '@/infra/helpers'
 
 type SutTypes = {
   sut: DbPasswordReset
   loadAccountByIdRepositorySpy: LoadAccountByIdRepositorySpy
-  encrypterSpy: EncrypterSpy
+  hashCompareSpy: HashComparerSpy
 }
 
 const makeSut = (): SutTypes => {
   const loadAccountByIdRepositorySpy = new LoadAccountByIdRepositorySpy()
-  const encrypterSpy = new EncrypterSpy()
-  const sut = new DbPasswordReset(loadAccountByIdRepositorySpy, encrypterSpy)
+  const hashCompareSpy = new HashComparerSpy()
+  const sut = new DbPasswordReset(loadAccountByIdRepositorySpy, hashCompareSpy)
   return {
     sut,
     loadAccountByIdRepositorySpy,
-    encrypterSpy
+    hashCompareSpy
   }
 }
 
@@ -53,11 +53,12 @@ describe('DbPasswordReset UseCase', () => {
     await expect(promise).rejects.toThrow('Token de redefinição de senha inválido ou expirado!')
   })
 
-  test('Should call Encrypter with correct plaintext', async () => {
-    const { sut, encrypterSpy } = makeSut()
+  test('Should call HashComparer with correct values', async () => {
+    const { sut, hashCompareSpy, loadAccountByIdRepositorySpy } = makeSut()
     const params = mockPasswordResetParams()
     await sut.reset(params)
-    expect(encrypterSpy.plaintext).toBe(params.resetToken)
+    expect(hashCompareSpy.plaintext).toBe(params.resetToken)
+    expect(hashCompareSpy.digest).toBe(loadAccountByIdRepositorySpy.result.resetPasswordToken)
   })
 
   test('Should throw if resetPasswordToken is null', async () => {
