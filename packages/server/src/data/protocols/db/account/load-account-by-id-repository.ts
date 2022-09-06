@@ -9,5 +9,7 @@ export namespace LoadAccountByIdRepository {
     email: string
     phone: string
     password: string
+    resetPasswordToken: string
+    resetPasswordExpires: Date
   }
 }

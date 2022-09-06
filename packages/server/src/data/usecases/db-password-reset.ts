@@ -11,6 +11,10 @@ export class DbPasswordReset implements PasswordReset {
       return false
     }
 
+    if (!account.resetPasswordToken) {
+      throw new Error('Token de redefinição de senha inválido ou expirado!')
+    }
+
     return true
   }
 }
