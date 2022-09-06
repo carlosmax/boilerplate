@@ -1,10 +1,10 @@
 import { PasswordReset } from '@/domain/usecases'
-import { Encrypter, LoadAccountByIdRepository } from '../protocols'
+import { HashComparer, LoadAccountByIdRepository } from '../protocols'
 
 export class DbPasswordReset implements PasswordReset {
   constructor(
     private readonly loadAccountByIdRepository: LoadAccountByIdRepository,
-    private readonly encrypter: Encrypter
+    private readonly hashComparer: HashComparer
   ) {}
 
   async reset(params: PasswordReset.Params): Promise<boolean> {
@@ -19,7 +19,7 @@ export class DbPasswordReset implements PasswordReset {
       throw new Error('Token de redefinição de senha inválido ou expirado!')
     }
 
-    await this.encrypter.encrypt(params.resetToken)
+    await this.hashComparer.compare(params.resetToken, account.resetPasswordToken)
 
     return true
   }
