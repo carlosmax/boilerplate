@@ -2,13 +2,19 @@ import { faker } from '@faker-js/faker'
 
 import { DbPasswordReset } from '@/data/usecases'
 import { PasswordReset } from '@/domain/usecases'
-import { EncrypterSpy, HashComparerSpy, LoadAccountByIdRepositorySpy } from '../mocks'
+import {
+  EncrypterSpy,
+  HashComparerSpy,
+  LoadAccountByIdRepositorySpy,
+  UpdatePasswordRepositorySpy
+} from '../mocks'
 import { throwError } from '../../domain/mocks'
 import { addHours } from '@/infra/helpers'
 
 type SutTypes = {
   sut: DbPasswordReset
   loadAccountByIdRepositorySpy: LoadAccountByIdRepositorySpy
+  updatePasswordRepositorySpy: UpdatePasswordRepositorySpy
   hashCompareSpy: HashComparerSpy
   encrypterSpy: EncrypterSpy
 }
@@ -17,10 +23,17 @@ const makeSut = (): SutTypes => {
   const loadAccountByIdRepositorySpy = new LoadAccountByIdRepositorySpy()
   const hashCompareSpy = new HashComparerSpy()
   const encrypterSpy = new EncrypterSpy()
-  const sut = new DbPasswordReset(loadAccountByIdRepositorySpy, hashCompareSpy, encrypterSpy)
+  const updatePasswordRepositorySpy = new UpdatePasswordRepositorySpy()
+  const sut = new DbPasswordReset(
+    loadAccountByIdRepositorySpy,
+    updatePasswordRepositorySpy,
+    hashCompareSpy,
+    encrypterSpy
+  )
   return {
     sut,
     loadAccountByIdRepositorySpy,
+    updatePasswordRepositorySpy,
     hashCompareSpy,
     encrypterSpy
   }
@@ -97,5 +110,12 @@ describe('DbPasswordReset UseCase', () => {
     const params = mockPasswordResetParams()
     await sut.reset(params)
     expect(encrypterSpy.plaintext).toBe(params.newPassword)
+  })
+
+  test('Should call UpdatePasswordRepository with correct values', async () => {
+    const { sut, encrypterSpy, updatePasswordRepositorySpy } = makeSut()
+    const params = mockPasswordResetParams()
+    await sut.reset(params)
+    expect(updatePasswordRepositorySpy.password).toBe(encrypterSpy.ciphertext)
   })
 })
