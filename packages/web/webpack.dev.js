@@ -1,6 +1,7 @@
 const path = require('path');
 const DotEnv = require('dotenv-webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const WebpackBar = require('webpackbar');
 const CopyPlugin = require('copy-webpack-plugin');
 const { outputConfig, copyPluginPatterns, entryConfig, devServer } = require("./env.config");
 
@@ -89,6 +90,7 @@ module.exports = (env, options) =>
             publicPath: "/",
         },
         plugins: [
+            new WebpackBar(),
             new DotEnv({
                 path: './.env.dev'
             }),

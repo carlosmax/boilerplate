@@ -4,13 +4,16 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin');
+const WebpackBar = require('webpackbar');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const {
   outputConfig,
   copyPluginPatterns,
   entryConfig,
   scssConfig,
-  terserPluginConfig
+  terserPluginConfig,
+  externals
 } = require('./env.config')
 
 module.exports = (env, options) => {
@@ -89,17 +92,18 @@ module.exports = (env, options) => {
         chunks: 'all'
       }
     },
-    externals: {
-      react: 'React',
-      axios: 'axios',
-      recoil: 'Recoil',
-      'react-dom': 'ReactDOM',
-      'react-router-dom': 'ReactRouterDOM'
-    },
+    // externals: {
+    //   react: 'React',
+    //   axios: 'axios',
+    //   recoil: 'Recoil',
+    //   'react-dom': 'ReactDOM',
+    //   'react-router-dom': 'ReactRouterDOM'
+    // },
     plugins: [
+      new WebpackBar(),
       new DotEnv({
         path: './.env.prod'
-    }),
+      }),
       new CleanWebpackPlugin(),
       new CopyPlugin(copyPluginPatterns),
       new MiniCssExtractPlugin({ filename: scssConfig.destFileName }),
@@ -108,6 +112,9 @@ module.exports = (env, options) => {
         inject: 'body',
         minify: false
       })
+      // new HtmlWebpackExternalsPlugin({
+      //   externals: externals,
+      // })
     ]
   }
 }
