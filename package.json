@@ -5,6 +5,8 @@
   "author": "Carlos Max",
   "private": true,
   "scripts": {
+    "start": "concurrently \"yarn workspace @monorepo/server start\" \"yarn workspace @monorepo/web start\"",
+    "build": "concurrently \"yarn workspace @monorepo/server build\" \"yarn workspace @monorepo/web build\"",
     "dev": "concurrently \"yarn workspace @monorepo/server build:watch\" \"yarn workspace @monorepo/server dev\" \"yarn workspace @monorepo/web dev\"",
     "lint:check": "eslint .",
     "lint:fix": "eslint . --fix",

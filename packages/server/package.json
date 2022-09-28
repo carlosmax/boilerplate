@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon -r dotenv/config -L --watch ./dist --inspect=0.0.0.0:9222 --nolazy ./dist/main/server.js",
     "start": "node -r dotenv/config dist/main/server.js",
-    "clean": "rimraf dist",
+    "dev": "nodemon -r dotenv/config -L --watch ./dist --inspect=0.0.0.0:9222 --nolazy ./dist/main/server.js",
     "build": "yarn clean && tsc -p tsconfig-build.json && yarn copy:handlebars",
     "build:watch": "yarn clean && tsc -p tsconfig-build.json -w",
+    "clean": "rimraf dist",
     "createdb": "npx sequelize-cli db:create",
     "migratedb": "npx sequelize-cli db:migrate",
     "seeddb": "npx sequelize-cli db:seed:all",
