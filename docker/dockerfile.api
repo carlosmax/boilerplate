@@ -1,0 +1,7 @@
+FROM node:16
+WORKDIR /usr/src/tracker-api
+COPY ./packages/server/package.json .
+RUN yarn install --omit=dev
+COPY ./packages/server/dist ./dist
+EXPOSE 3001
+CMD yarn start
