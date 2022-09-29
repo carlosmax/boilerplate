@@ -19,8 +19,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@monorepo/logger": "*",
-    "@monorepo/validation": "*",
+    "@monorepo/logger": "file:../shared/logger/dist",
+    "@monorepo/validation": "file:../shared/validation/dist",
     "@sendgrid/mail": "^7.7.0",
     "@types/node-schedule": "^2.1.0",
     "aes-js": "^3.1.2",
